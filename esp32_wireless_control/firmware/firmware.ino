@@ -188,7 +188,7 @@ void handleStartCapture() {
     focal_length = server.arg(FOCAL_LENGTH).toInt();
     pixel_size = server.arg(PIXEL_SIZE).toInt();
     disable_tracking = server.arg(DISABLE_TRACKING_ON_FINISH).toInt();
-
+    
     exposures_taken = 0;
 
     if ((exposure_duration == 0 || exposure_count == 0)) {
