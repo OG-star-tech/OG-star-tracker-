@@ -22,6 +22,7 @@ If you like this work, feel free to connect with me on [Github](https://github.c
 ## Table of Contents
 - [PCB](pcb/README.md)
 - [Compiling](docs/compiling.md)
+- [Coding Style](docs/coding-style.md)
 
 
 ## Building guide
@@ -44,3 +45,8 @@ After connection was successful the tracker to actually control it access the **
 
 If the webserver is not enough there is a app available to improve the accessibility even further.
 Check out https://github.com/OndraGejdos/OG-star-tracker-App for more details.
+
+## Contributing
+
+When contributing to the project please make sure to follow the [coding style](docs/coding-style.md) prior creating a pull request.
+With this we can make sure to keep a clean and tidy codespace.
