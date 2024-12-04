@@ -11,11 +11,9 @@ void IRAM_ATTR stepTimerRA_ISR() {
   ra_axis_step_phase = !ra_axis_step_phase;
   digitalWrite(AXIS1_STEP, ra_axis_step_phase);       //toggle step pin at required frequency
   if (ra_axis.counterActive && ra_axis_step_phase) {  //if counter active
-    if (ra_axis.axisAbsoluteDirection) {
-      ra_axis.axisCountValue = ra_axis.axisCountValue + 1;
-    } else if (!ra_axis.axisAbsoluteDirection) {
-      ra_axis.axisCountValue = ra_axis.axisCountValue - 1;
-    }
+    int temp = ra_axis.axisCountValue;
+    ra_axis.axisAbsoluteDirection ? temp++ : temp--;
+    ra_axis.axisCountValue = temp;
     if (ra_axis.goToTarget && ra_axis.axisCountValue == ra_axis.targetCount) {
       ra_axis.goToTarget = false;
       ra_axis.stopSlew();
@@ -27,12 +25,10 @@ void IRAM_ATTR stepTimerDEC_ISR() {
   //dec ISR
   dec_axis_step_phase = !dec_axis_step_phase;
   digitalWrite(AXIS2_STEP, dec_axis_step_phase);                                         //toggle step pin at required frequency
-  if (dec_axis_step_phase && dec_axis.counterActive) {   
-    if (dec_axis.axisAbsoluteDirection) {
-      dec_axis.axisCountValue = dec_axis.axisCountValue + 1;
-    } else if (!dec_axis.axisAbsoluteDirection) {
-      dec_axis.axisCountValue = dec_axis.axisCountValue - 1;
-    }                                //if counter active
+  if (dec_axis_step_phase && dec_axis.counterActive) {                                   //if counter active
+    int temp = dec_axis.axisCountValue;
+    dec_axis.axisAbsoluteDirection ? temp++ : temp--;
+    dec_axis.axisCountValue = temp;
   }
 }
 
