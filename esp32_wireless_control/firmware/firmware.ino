@@ -91,22 +91,16 @@ void handleSetLanguage() {
   server.send(200, MIME_TYPE_TEXT, "OK");
 }
 
-void IRAM_ATTR
-
-timer_web_timeout_ISR() {
+void IRAM_ATTR timer_web_timeout_ISR() {
   handleSlewOff();
 }
 
-void IRAM_ATTR
-
-timer_tracking_ISR() {
+void IRAM_ATTR timer_tracking_ISR() {
   //tracking ISR
   digitalWrite(AXIS1_STEP, !digitalRead(AXIS1_STEP));  //toggle step pin at required frequency
 }
 
-void IRAM_ATTR
-
-timer_interval_ISR() {
+void IRAM_ATTR timer_interval_ISR() {
   Serial.println("----");
   //intervalometer ISR
   switch (photo_control_status) {
@@ -152,9 +146,9 @@ timer_interval_ISR() {
 void handleRoot() {
   Template tmpl(html_template);
 
-  // 添加logo替换
+  // Add a logo replacement
   tmpl.replace("LOGO", LOGO_BASE64)
-          // 在其他替换之前添加语言选择器的状态
+      // Add the state of the language selector before other substitutions
       .replaceSelected("lang_en", currentLanguage == EN)
       .replaceSelected("lang_cn", currentLanguage == CN)
       .replace("TITLE", STR_TITLE, currentLanguage)
