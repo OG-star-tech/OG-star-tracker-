@@ -77,18 +77,18 @@ enum StringID {
 };
 
 // 获取字符串的函数
-const char* getString(StringID id, Language lang = EN);
+const char *getString(StringID id, Language lang = EN);
 
 // 获取参数键名的函数
-const char* getParamKey(StringID id);
+const char *getParamKey(StringID id);
 
 // MIME类型常量
-extern const char* MIME_TYPE_TEXT;
-extern const char* MIME_TYPE_HTML;
+extern const char *MIME_TYPE_TEXT;
+extern const char *MIME_TYPE_HTML;
 
 // HTML模板
-extern const char* html_template;
-extern const char* LOGO_BASE64;
+extern const char *html_template;
+extern const char *LOGO_BASE64;
 
 // 获取完整HTML的函数
 String getHTML();
@@ -99,9 +99,10 @@ String getHTML();
 
 class HTMLBuilder {
 public:
-  static String build(const char* tmpl, Language lang);
+  static String build(const char *tmpl, Language lang);
+
 private:
-  static void replaceAll(String& html, Language lang);
+  static void replaceAll(String &html, Language lang);
 };
 
 #endif
