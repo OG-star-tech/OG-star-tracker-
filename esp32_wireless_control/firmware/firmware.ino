@@ -69,10 +69,9 @@ hw_timer_t* timer_tracking = NULL;     //for tracking and slewing rate
 hw_timer_t* timer_interval = NULL;     //for intervalometer control
 hw_timer_t* timer_web_timeout = NULL;  //for webclient timeout control
 
-// 添加当前语言变量
+// Mark the current language
 Language currentLanguage = EN;
 
-// 处理语言切换请求
 void handleSetLanguage() {
     String lang = server.arg("lang");
     if (lang == "cn") {
@@ -81,11 +80,10 @@ void handleSetLanguage() {
         currentLanguage = EN;
     }
     
-    // 保存语言选择到EEPROM
+    // Save the language selection to EEPROM
     EEPROM.write(LANG_EEPROM_ADDR, currentLanguage);
     EEPROM.commit();
-    
-    // 返回成功状态
+
     server.send(200, MIME_TYPE_TEXT, "OK");
 }
 
@@ -201,11 +199,27 @@ void handleRoot() {
 void handleOn() {
     int tracking_speed = server.arg(getParamKey(STR_TRACKING_SPEED)).toInt();
     direction = server.arg(getParamKey(STR_DIRECTION)).toInt();
+    switch (tracking_speed) {
+    case 0:  //sidereal rate
+        tracking_rate = TRACKING_SIDEREAL;
+        break;
+    case 1:  //solar rate
+        tracking_rate = TRACKING_SOLAR;
+        break;
+    case 2:  //lunar rate
+       tracking_rate = TRACKING_LUNAR;
+        break;
+    default:
+        tracking_rate = TRACKING_SIDEREAL;
+        break;
+  }
     s_tracking_active = true;
     initTracking();
 }
 
 void handleOff() {
+    s_tracking_active = false;
+    timerAlarmDisable(timer_tracking);
     server.send(200, MIME_TYPE_TEXT, getString(STR_TRACKING_OFF, currentLanguage));
 }
 
