@@ -198,7 +198,6 @@ void handleRoot() {
 
 void handleOn() {
     int tracking_speed = server.arg(getParamKey(STR_TRACKING_SPEED)).toInt();
-    direction = server.arg(getParamKey(STR_DIRECTION)).toInt();
     switch (tracking_speed) {
     case 0:  //sidereal rate
         tracking_rate = TRACKING_SIDEREAL;
@@ -213,6 +212,7 @@ void handleOn() {
         tracking_rate = TRACKING_SIDEREAL;
         break;
   }
+    direction = server.arg(getParamKey(STR_DIRECTION)).toInt();
     s_tracking_active = true;
     initTracking();
 }
