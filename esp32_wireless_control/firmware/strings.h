@@ -4,17 +4,17 @@
 
 #include <Arduino.h>
 
-// 支持的语言枚举
+// Language type enumeration
 enum Language {
   EN,
   CN,
-  // 可以轻松添加更多语言
+  // Add additional languages
   LANG_COUNT
 };
 
-// 字符串ID枚举
+// String ID enumeration
 enum StringID {
-  // 状态消息
+  // Status messages
   STR_TRACKING_ON,
   STR_TRACKING_OFF,
   STR_IDLE,
@@ -27,7 +27,7 @@ enum StringID {
   STR_CAPTURE_ALREADY_OFF,
   STR_CAPTURES_REMAINING,
 
-  // 参数键名
+  // The name of the parameter key
   STR_TRACKING_SPEED,
   STR_SPEED,
   STR_DIRECTION,
@@ -38,7 +38,7 @@ enum StringID {
   STR_PIXEL_SIZE,
   STR_DISABLE_TRACKING,
 
-  // UI 元素
+  // UI elements
   STR_TITLE,
   STR_TRACKING,
   STR_HEMISPHERE,
@@ -76,17 +76,17 @@ enum StringID {
   STR_COUNT
 };
 
-// 获取字符串的函数
+// Function to get string
 const char *getString(StringID id, Language lang = EN);
 
-// 获取参数键名的函数
+// The function to obtain the name of the parameter key
 const char *getParamKey(StringID id);
 
-// MIME类型常量
+// MIME type constants
 extern const char *MIME_TYPE_TEXT;
 extern const char *MIME_TYPE_HTML;
 
-// HTML模板
+// HTML templates
 extern const char *html_template;
 extern const char *LOGO_BASE64;
 

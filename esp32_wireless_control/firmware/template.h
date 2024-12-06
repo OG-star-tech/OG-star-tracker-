@@ -8,7 +8,7 @@ class Template {
 public:
   Template(const char *tmpl);
 
-  // 使用链式调用的方式替换占位符
+  // Replace placeholders with chained calls
   Template &replace(const char *placeholder, const char *value);
 
   Template &replace(const char *placeholder, StringID strId, Language lang);
@@ -21,7 +21,7 @@ public:
 
   Template &replaceSelected(const char *placeholder, bool selected);
 
-  // 获取最终的HTML字符串
+  // Get the final HTML string
   String toString() const;
 
 private:

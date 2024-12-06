@@ -189,7 +189,7 @@ void handleRoot() {
       .replace("BTN_ON", STR_BTN_ON, currentLanguage)
       .replace("BTN_OFF", STR_BTN_OFF, currentLanguage)
 
-          // 替换状态相关的占位符
+      // Replace state-related placeholders
       .replaceSelected("north", direction == 1)
       .replaceSelected("south", direction == 0)
       .replaceChecked("dither", dither_enabled)
@@ -515,7 +515,7 @@ void setup() {
   server.on("/status", HTTP_GET, handleStatusRequest);
   server.on("/version", HTTP_GET, handleVersion);
 
-  // 从EEPROM读取语言设置
+  // Read the language settings from EEPROM
   currentLanguage = (Language) EEPROM.read(LANG_EEPROM_ADDR);
   if (currentLanguage >= LANG_COUNT) {
     currentLanguage = EN;  // 如果读取到无效值，默认使用英语
@@ -523,7 +523,7 @@ void setup() {
     EEPROM.commit();
   }
 
-  // 添加语言切换路由
+  // Added language switching routes
   server.on("/setlang", HTTP_GET, handleSetLanguage);
 
   // Start the server
