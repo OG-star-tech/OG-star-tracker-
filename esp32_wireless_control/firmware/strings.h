@@ -90,19 +90,4 @@ extern const char *MIME_TYPE_HTML;
 extern const char *html_template;
 extern const char *LOGO_BASE64;
 
-// 获取完整HTML的函数
-String getHTML();
-
-#define PLACEHOLDER_TITLE "TITLE"
-#define PLACEHOLDER_TRACKING "TRACKING"
-// ...其他占位符定义
-
-class HTMLBuilder {
-public:
-  static String build(const char *tmpl, Language lang);
-
-private:
-  static void replaceAll(String &html, Language lang);
-};
-
 #endif
