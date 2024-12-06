@@ -31,7 +31,4 @@
 #define MS2           22
 #define EN12_n        17
 
-// EEPROM addresses
-#define LANG_EEPROM_ADDR 0x10  // Language setting EEPROM address
-
 #endif
