@@ -315,17 +315,22 @@ void handleAbortCapture() {
 
 void handleStatusRequest() {
   if (s_slew_active) {
+    timerWrite(timer_web_timeout, 0);  //reset timer while slew on, prove still connected to web/app
     server.send(200, MIME_TYPE_TEXT, getString(STR_SLEWING, currentLanguage));
-    return;
-  }
-  if (!s_tracking_active) {
-    server.send(200, MIME_TYPE_TEXT, getString(STR_IDLE, currentLanguage));
-    return;
   }
   if (photo_control_status != INACTIVE) {
     char status[60];
     sprintf(status, getString(STR_CAPTURES_REMAINING, currentLanguage), exposure_count - exposures_taken);
     server.send(200, MIME_TYPE_TEXT, status);
+    return;
+  }
+  if (!s_tracking_active && photo_control_status == INACTIVE) {
+    server.send(200, MIME_TYPE_TEXT, getString(STR_IDLE, currentLanguage));
+    return;
+  }
+
+  if (!s_tracking_active) {
+    server.send(200, MIME_TYPE_TEXT, getString(STR_IDLE, currentLanguage));
     return;
   }
 
