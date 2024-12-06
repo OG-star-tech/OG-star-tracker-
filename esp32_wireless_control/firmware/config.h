@@ -19,7 +19,7 @@
 
 //Stepper driver pins -- intended for TMC2209 for now
 //AXIS 1 - RA
-#define AXIS1_STEP     5 
+#define AXIS1_STEP     5
 #define AXIS1_DIR     15
 #define SPREAD_1       4
 //AXIS 2 - DEC
