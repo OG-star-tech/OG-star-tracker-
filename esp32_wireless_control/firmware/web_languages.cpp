@@ -1,10 +1,9 @@
 #include "web_languages.h"
-#include "englishLanguage.h"
 #include "chineseLanguage.h"
-//include Next language
+#include "englishLanguage.h"
+// include Next language
 
-
-
+/* clang-format off */
 const char** languageNames[LANG_COUNT] = {
   englishLangLanguageNames,
   chineseLangLanguageNames
@@ -82,3 +81,4 @@ const char* HTMLplaceHolders[numberOfHTMLStrings] = {
   "%STR_STATUS_MSG%",
   "%STR_FIRMWARE_VERSION%"
 };
+/* clang-format on */

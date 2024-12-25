@@ -1,7 +1,6 @@
 // website_strings.cpp
 #include "website_strings.h"
 
-
 const char* SPEED = "speed";
 const char* TRACKING_SPEED = "trackingSpeed";
 const char* DIRECTION = "direction";
@@ -23,5 +22,3 @@ const char* FOCAL_LENGTH = "focalLength";
 const char* PIXEL_SIZE = "pixelSize";
 const char* MIME_TYPE_TEXT = "text/plain";
 const char* MIME_TYPE_HTML = "text/html";
-
-

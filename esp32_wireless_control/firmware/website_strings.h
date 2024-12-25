@@ -1,5 +1,5 @@
 // website_strings.h // name change due to conflict in Arduino ESP32 v3.x
-#ifndef WEBSITE_STRINGS_H 
+#ifndef WEBSITE_STRINGS_H
 #define WEBSITE_STRINGS_H
 
 extern const char* TRACKING_SPEED;
@@ -25,5 +25,4 @@ extern const char* DISABLE_TRACKING_ON_FINISH;
 extern const char* MIME_TYPE_TEXT;
 extern const char* MIME_TYPE_HTML;
 
-
-#endif  // STRINGS_H
+#endif // STRINGS_H

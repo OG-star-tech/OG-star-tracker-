@@ -1,6 +1,7 @@
 #ifndef INDEX_HTML_H
 #define INDEX_HTML_H
 
+/* clang-format off */
 const char html_content[] = R"=====(
   <DOCTYPE html> 
   <html lang="en"> 
@@ -621,5 +622,5 @@ ecb+yBpnGI+u4f3mmXHvX6sln9yPK6oXFwnrF9QP2D1E155JRPj/2PBNp9fMzv6D9chy0RLEZbNGlKPL
   </body> 
   </html>
 )=====";
-
+/* clang-format off */
 #endif
