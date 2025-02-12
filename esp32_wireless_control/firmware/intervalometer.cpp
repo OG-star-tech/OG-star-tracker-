@@ -87,6 +87,8 @@ void Intervalometer::run()
                     ra_axis.stopTracking();
                 }
                 ra_axis.counterActive = currentSettings.mode == LONG_EXPOSURE_MOVIE ? true : false;
+                if(currentSettings.preDelay == 0)
+                    currentSettings.preDelay = 2;
                 intervalometerTimer.start(2000 * currentSettings.preDelay, false);
                 timerStarted = true;
                 intervalometerActive = true;
