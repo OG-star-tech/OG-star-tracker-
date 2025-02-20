@@ -24,6 +24,24 @@ void webserverTask(void* pvParameters);
 void dnsserverTask(void* pvParameters);
 void intervalometerTask(void* pvParameters);
 
+String getChipID()
+{
+    uint64_t chipid = ESP.getEfuseMac();
+    uint8_t baseMac[6];
+
+    // Extract each byte of the MAC address from the chipid
+    baseMac[0] = (chipid >> 40) & 0xFF;
+    baseMac[1] = (chipid >> 32) & 0xFF;
+    baseMac[2] = (chipid >> 24) & 0xFF;
+    baseMac[3] = (chipid >> 16) & 0xFF;
+    baseMac[4] = (chipid >> 8) & 0xFF;
+    baseMac[5] = chipid & 0xFF;
+
+    // Create a String object to hold the formatted ID
+    String id = String(baseMac[4], HEX) + String(baseMac[5], HEX);
+    return id;
+}
+
 // Handle requests to the root URL ("/")
 void handleRoot()
 {
@@ -366,9 +384,14 @@ void handleVersion()
 
 void setupWireless()
 {
+    // Create unique SSID for each device
+    String chipID = getChipID();
+    char ssid[32];
+    sprintf(ssid, "%s#%s", WIFI_SSID, chipID.c_str());
+
 #ifdef AP
     WiFi.mode(WIFI_MODE_AP);
-    WiFi.softAP(WIFI_SSID, WIFI_PASSWORD);
+    WiFi.softAP(ssid, WIFI_PASSWORD);
     vTaskDelay(500);
     print_out("Creating Wifi Network");
 
@@ -389,7 +412,7 @@ void setupWireless()
     // ANDROID 10 WORKAROUND==================================================
 #else
     WiFi.mode(WIFI_MODE_STA); // Set ESP32 in station mode
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    WiFi.begin(ssid, WIFI_PASSWORD);
     print_out("Connecting to Network in STA mode");
     while (WiFi.status() != WL_CONNECTED)
     {
