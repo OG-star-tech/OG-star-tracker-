@@ -60,11 +60,6 @@ Axis::Axis(uint8_t axis, uint8_t dirPinforAxis, bool invertDirPin) : stepTimer(4
             stepTimer.attachInterupt(&stepTimerDEC_ISR);
             break;
     }
-
-    if (DEFAULT_ENABLE_TRACKING == 1 && axisNumber == 1)
-    {
-        startTracking(trackingRate, trackingDirection);
-    }
 }
 
 void Axis::startTracking(trackingRateS rate, bool directionArg)

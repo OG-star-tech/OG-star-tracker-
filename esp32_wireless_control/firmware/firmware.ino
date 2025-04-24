@@ -448,14 +448,22 @@ void setup()
     digitalWrite(EN12_n, LOW);
     // handleExposureSettings();
 
-    // Initialize Wifi and web server
-    setupWireless();
-
     if (xTaskCreate(uartTask, "UartTask", 4096, NULL, 1, NULL))
     {
         print_out("\033c");
         print_out("Starting uart task");
     }
+
+    // Start tracking axis now that pins and UART is initialized
+#if defined(DEFAULT_ENABLE_TRACKING) && (DEFAULT_ENABLE_TRACKING == 1)
+    print_out(c_DIRECTION ? "Tracking with c_DIRECTION: HIGH (North)"
+                          : "Tracking with c_DIRECTION: LOW (South)");
+    ra_axis.startTracking();
+#endif // DEFAULT_ENABLE_TRACKING
+
+    // Initialize Wifi and web server
+    setupWireless();
+
     if (xTaskCreate(intervalometerTask, "intervalometerTask", 4096, NULL, 1, NULL))
         print_out("Starting intervalometer task");
     if (xTaskCreatePinnedToCore(webserverTask, "webserverTask", 4096, NULL, 1, NULL, 0))
