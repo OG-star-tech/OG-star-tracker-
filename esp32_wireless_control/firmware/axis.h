@@ -27,10 +27,6 @@ class Axis
   public:
     Axis(uint8_t axisNumber, uint8_t dirPinforAxis, bool invertDirPin);
     void startTracking(trackingRateS rate, bool directionArg);
-    void startTracking()
-    {
-        startTracking(trackingRate, trackingDirection);
-    }
     void stopTracking();
     void startSlew(uint64_t rate, bool directionArg);
     void stopSlew();
