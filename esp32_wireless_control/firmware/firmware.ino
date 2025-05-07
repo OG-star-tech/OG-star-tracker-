@@ -424,6 +424,15 @@ void setupWireless()
     dnsServer.start(DNS_PORT, WEBSITE_NAME, WiFi.softAPIP());
 }
 
+void setupTracking()
+{
+#if defined(DEFAULT_ENABLE_TRACKING) && (DEFAULT_ENABLE_TRACKING == 1)
+    print_out(c_DIRECTION ? "Tracking with c_DIRECTION: HIGH (North)"
+                          : "Tracking with c_DIRECTION: LOW (South)");
+    ra_axis.startTracking(ra_axis.trackingRate, ra_axis.trackingDirection);
+#endif // DEFAULT_ENABLE_TRACKING
+}
+
 void setup()
 {
     // Start the debug serial connection
@@ -448,20 +457,25 @@ void setup()
     digitalWrite(EN12_n, LOW);
     // handleExposureSettings();
 
-    // Initialize Wifi and web server
-    setupWireless();
-
     if (xTaskCreate(uartTask, "UartTask", 4096, NULL, 1, NULL))
     {
         print_out("\033c");
         print_out("Starting uart task");
     }
+
+    if (xTaskCreate(intervalometerTask, "intervalometerTask", 4096, NULL, 1, NULL))
+        print_out("Starting intervalometer task");
     if (xTaskCreate(intervalometerTask, "intervalometerTask", 4096, NULL, 1, NULL))
         print_out("Starting intervalometer task");
     if (xTaskCreatePinnedToCore(webserverTask, "webserverTask", 4096, NULL, 1, NULL, 0))
         print_out("Starting webserver task");
     if (xTaskCreate(dnsserverTask, "dnsserverTask", 2048, NULL, 1, NULL))
         print_out("Starting dnsserver task");
+
+    // Initialize Wifi and web server
+    setupWireless();
+    // Start tracking axis now that pins and UART is initialized
+    setupTracking();
 }
 
 void loop()
