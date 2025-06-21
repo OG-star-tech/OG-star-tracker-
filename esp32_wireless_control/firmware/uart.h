@@ -22,6 +22,7 @@ void print_out(const char* format, ...);
 void print_out_nonl(const char* format, ...);
 void print_out_tbl(uint8_t index);
 void setup_uart(HardwareSerial* serial, long baudrate);
+//void setup_uart(USBCDC* serial, long baudrate);
 void uart_task();
 
 #endif

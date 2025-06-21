@@ -1,5 +1,6 @@
+#include <Arduino.h>
 #include <ArduinoJson.h>
-#include <DNSServer.h>
+#include <ESPmDNS.h>
 #include <ErriezSerialTerminal.h>
 #include <WebServer.h>
 #include <WiFi.h>
@@ -18,15 +19,18 @@
 #include "web_languages.h"
 #include "website_strings.h"
 
+#include "display.h"
+
 SerialTerminal term(CLI_NEWLINE_CHAR, CLI_DELIMITER_CHAR);
 WebServer server(WEBSERVER_PORT);
-DNSServer dnsServer;
 Languages language = EN;
+
+#include <Fadinglight.h>
+Fadinglight led_red(STATUS_LED, true, 20);
 
 void uartTask(void* pvParameters);
 void consoleTask(void* pvParameters);
 void webserverTask(void* pvParameters);
-void dnsserverTask(void* pvParameters);
 void intervalometerTask(void* pvParameters);
 
 // Handle requests to the root URL ("/")
@@ -471,9 +475,25 @@ void setupWireless()
     print_out("%s", WiFi.localIP().toString().c_str());
 #endif
 
-    dnsServer.setTTL(300);
-    dnsServer.setErrorReplyCode(DNSReplyCode::ServerFailure);
-    dnsServer.start(DNS_PORT, WEBSITE_NAME, WiFi.softAPIP());
+//    dnsServer.setTTL(300);
+//    dnsServer.setErrorReplyCode(DNSReplyCode::ServerFailure);
+//    dnsServer.start(DNS_PORT, WEBSITE_NAME, WiFi.softAPIP());
+
+    print_out("Starting mDNS responder");
+    if (!MDNS.begin("ogtracker"))
+    {
+		print_out("Error starting mDNS responder");
+		return;
+	}
+    print_out("mDNS responder started");
+
+    MDNS.addService("http", "tcp", 80);
+    MDNS.addServiceTxt("http", "tcp", "ogtracker", "1");
+    MDNS.addServiceTxt("http", "tcp", "version", BUILD_VERSION);
+
+    MDNS.addService("ogtracker", "tcp", 80);
+    MDNS.addServiceTxt("ogtracker", "tcp", "version", BUILD_VERSION);
+
 }
 
 void setup()
@@ -481,9 +501,17 @@ void setup()
     // Start the debug serial connection
     setup_uart(&Serial, 115200);
 
+    display.begin();
+
+    if (xTaskCreate(uartTask, "uart", 4096, NULL, 1, NULL))
+    {
+        // print_out_tbl(TSK_CLEAR_SCREEN);
+        print_out_tbl(TSK_START_UART);
+    }
+
     print_out_tbl(HEAD_LINE);
     print_out_tbl(HEAD_LINE_TRACKER);
-    print_out("***         Running on %d MHz         ***\r\n", getCpuFrequencyMhz());
+    print_out("***         Running on %d MHz         ***", getCpuFrequencyMhz());
     print_out_tbl(HEAD_LINE_VERSION);
 
     EEPROM.begin(512); // SIZE = 5 x presets = 5 x 32 bytes = 160 bytes
@@ -500,8 +528,8 @@ void setup()
     pinMode(AXIS1_STEP, OUTPUT);
     pinMode(AXIS1_DIR, OUTPUT);
     pinMode(EN12_n, OUTPUT);
-    pinMode(MS1, OUTPUT);
-    pinMode(MS2, OUTPUT);
+//    pinMode(MS1, OUTPUT);
+//    pinMode(MS2, OUTPUT);
     digitalWrite(AXIS1_STEP, LOW);
     digitalWrite(EN12_n, LOW);
     // handleExposureSettings();
@@ -512,41 +540,33 @@ void setup()
     // Initialize the console serial
     setup_terminal(&term);
 
-    if (xTaskCreate(uartTask, "uart", 4096, NULL, 1, NULL))
-    {
-        print_out_tbl(TSK_CLEAR_SCREEN);
-        print_out_tbl(TSK_START_UART);
-    }
-
     if (xTaskCreate(consoleTask, "console", 4096, NULL, 1, NULL))
         print_out_tbl(TSK_START_CONSOLE);
-    ;
+
     if (xTaskCreate(intervalometerTask, "intervalometer", 4096, NULL, 1, NULL))
         print_out_tbl(TSK_START_INTERVALOMETER);
     if (xTaskCreatePinnedToCore(webserverTask, "webserver", 4096, NULL, 1, NULL, 0))
         print_out_tbl(TSK_START_WEBSERVER);
-    if (xTaskCreate(dnsserverTask, "dnsserver", 2048, NULL, 1, NULL))
-        print_out_tbl(TSK_START_DNSSERVER);
 }
 
 void loop()
 {
-    int delay_ticks = 0;
-    for (;;)
-    {
-        if (ra_axis.slewActive)
-        {
-            // Blink status LED if mount is in slew mode
-            digitalWrite(STATUS_LED, !digitalRead(STATUS_LED));
-            delay_ticks = 150; // Delay for 150 ms
-        }
-        else
-        {
-            // Turn on status LED if sidereal tracking is ON
-            digitalWrite(STATUS_LED, ra_axis.trackingActive ? HIGH : LOW);
-            delay_ticks = 1000; // Delay for 1 second
-        }
-        vTaskDelay(delay_ticks);
+    for (;;) {
+		if (ra_axis.slewActive)
+		{
+			// Blink status LED if mount is in slew mode
+			led_red.blink();
+		}
+		else if (ra_axis.trackingActive)
+		{
+			// Turn on status LED if sidereal tracking is ON
+			led_red.on();
+		}
+		else
+		{
+			led_red.off();
+		}
+		vTaskDelay(1);
     }
 }
 
@@ -555,15 +575,6 @@ void webserverTask(void* pvParameters)
     for (;;)
     {
         server.handleClient();
-        vTaskDelay(1);
-    }
-}
-
-void dnsserverTask(void* pvParameters)
-{
-    for (;;)
-    {
-        dnsServer.processNextRequest();
         vTaskDelay(1);
     }
 }

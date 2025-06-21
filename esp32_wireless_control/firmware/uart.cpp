@@ -15,6 +15,7 @@ QueueHandle_t uartq;
 SemaphoreHandle_t uart_tx_mutex;
 SemaphoreHandle_t uart_rx_mutex;
 HardwareSerial* _uart;
+//USBCDC* _uart;
 
 char rec_uart_buffer[MAX_UART_LINE_LEN];
 char tra_uart_buffer[MAX_UART_LINE_LEN];
@@ -52,6 +53,7 @@ void print_out_tbl(uint8_t index)
 }
 
 void setup_uart(HardwareSerial* serial, long baudrate)
+//void setup_uart(USBCDC* serial, long baudrate)
 {
     _uart = serial;
     _uart->begin(baudrate);

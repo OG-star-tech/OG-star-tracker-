@@ -9,7 +9,9 @@ void intervalometer_ISA()
 }
 
 Intervalometer::Intervalometer(uint8_t triggerPinArg)
-    : intervalometerTimer(2000, intervalometer_ISA)
+    : intervalometerTimer(2000, intervalometer_ISA),
+	  exposures_taken(0),
+	  frames_taken(0)
 { // 2kHz resolution of 0.5 ms
 
     currentState = INACTIVE;
@@ -108,6 +110,7 @@ void Intervalometer::run()
                 print_out("Intervalometer: capture_start");
                 if (currentSettings.mode == LONG_EXPOSURE_MOVIE && !ra_axis.counterActive)
                 {
+                    ra_axis.resetPosition();
                     ra_axis.resetAxisCount();
                     ra_axis.counterActive = true;
                 }
@@ -185,6 +188,7 @@ void Intervalometer::run()
                 int64_t stepsToMove = currentSettings.panDirection
                                           ? arcSecsToMove / ARCSEC_PER_STEP
                                           : (arcSecsToMove / ARCSEC_PER_STEP) * -1;
+                ra_axis.resetPosition();
                 ra_axis.resetAxisCount();
                 ra_axis.setAxisTargetCount(stepsToMove);
                 if (ra_axis.targetCount != ra_axis.axisCountValue)
