@@ -72,7 +72,7 @@ const char* HTMLplaceHolders[numberOfHTMLStrings] = {
   "%STR_FRAMES%",
   "%STR_NO_FRAMES%",
   "%STR_PAN_ANGLE%",
-  "%STR_DEGREES%",
+  "%STR_HOURS%",
   "%STR_PAN_DIRECTION%",
   "%STR_LEFT%",
   "%STR_RIGHT%",

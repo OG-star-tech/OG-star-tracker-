@@ -424,17 +424,17 @@ const char html_content[] = R"=====(
             }
 
             function parseCurrentRAInput() {
-                const currentHours = document.getElementById('currentHours').value;
-                const currentMinutes = document.getElementById('currentMinutes').value;
-                const currentSeconds = document.getElementById('currentSeconds').value;
+                const currentHours = +document.getElementById('currentHours').value;
+                const currentMinutes = +document.getElementById('currentMinutes').value;
+                const currentSeconds = +document.getElementById('currentSeconds').value;
                 var totalArcseconds = (currentHours * 3600) + (currentMinutes * 60) + currentSeconds;
                 return totalArcseconds;
             }
 
             function parseTargetRAInput() {
-                const targetHours = document.getElementById('targetHours').value;
-                const targetMinutes = document.getElementById('targetMinutes').value;
-                const targetSeconds = document.getElementById('targetSeconds').value;
+                const targetHours = +document.getElementById('targetHours').value;
+                const targetMinutes = +document.getElementById('targetMinutes').value;
+                const targetSeconds = +document.getElementById('targetSeconds').value;
                 var totalArcseconds = (targetHours * 3600) + (targetMinutes * 60) + targetSeconds;
                 return totalArcseconds;
             }
@@ -667,9 +667,9 @@ const char html_content[] = R"=====(
                     <h3>%STR_GOTO_RA_TARGET%</h3>
 
                     <h4>Hours:</h4>
-                    <input type="number" id="currentHours" placeholder="0" min="0" max="360"
+                    <input type="number" id="currentHours" placeholder="0" min="0" max="23"
                         onchange="calculateRAInput();">
-                    <input type="number" id="targetHours" placeholder="0" min="0" max="360"
+                    <input type="number" id="targetHours" placeholder="0" min="0" max="23"
                         onchange="calculateRAInput();">
 
                     <h4>Minutes:</h4>
@@ -754,7 +754,7 @@ const char html_content[] = R"=====(
                 </div>
                 <div class="grid2" id='panAngleDiv'>
                     <h3>%STR_PAN_ANGLE%:</h3>
-                    <input type='number' id='panAngle' placeholder='%STR_DEGREES%' onchange="calculateCaptureTime();">
+                    <input type='number' id='panAngle' placeholder='%STR_HOURS%' onchange="calculateCaptureTime();">
                 </div>
                 <div class="grid2" id='panDirectionDiv'>
                     <h3>%STR_PAN_DIRECTION%:</h3>

@@ -90,7 +90,7 @@ const char* englishLangHTMLStrings[numberOfHTMLStrings] = {
     "Number of Frames",              // STR_FRAMES
     "nº of frames",                  // STR_NO_FRAMES
     "Pan Angle",                     // STR_PAN_ANGLE
-    "degrees (Ex. 3.45)",            // STR_DEGREES
+    "hours (Ex. 6)",                 // STR_HOURS
     "Pan Direction",                 // STR_PAN_DIRECTION
     "Left",                          // STR_LEFT
     "Right",                         // STR_RIGHT

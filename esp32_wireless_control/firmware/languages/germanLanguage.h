@@ -90,7 +90,7 @@ const char* germanLangHTMLStrings[numberOfHTMLStrings] = {
     "Anzahl der Bilder",                            // STR_FRAMES
     "nº der Bilder",                                // STR_NO_FRAMES
     "Schwenkwinkel",                                // STR_PAN_ANGLE
-    "in Grad (z.B. 3.45)",                          // STR_DEGREES
+    "in Stunden (z.B. 6)",                          // STR_HOURS
     "Schwenkrichtung",                              // STR_PAN_DIRECTION
     "Links",                                        // STR_LEFT
     "Rechts",                                       // STR_RIGHT
