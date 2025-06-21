@@ -3,6 +3,7 @@
 
 #include "config.h"
 #include "hardwaretimer.h"
+#include "motor_driver.h"
 
 extern HardwareTimer slewTimeOut;
 
@@ -35,7 +36,7 @@ class Position
 class Axis
 {
   public:
-    Axis(uint8_t axisNumber, uint8_t dirPinforAxis, bool invertDirPin);
+    Axis(uint8_t axisNumber, MotorDriver* driver, uint8_t dirPinforAxis, bool invertDirPin);
 
     void setAxisTargetCount(int64_t count);
     int64_t getAxisTargetCount();
@@ -64,15 +65,14 @@ class Axis
 
   private:
     void setDirection(bool directionArg);
-    static void setMicrostep(uint8_t microstep);
+    void setMicrostep(uint8_t microstep);
 
     HardwareTimer stepTimer;
     uint8_t stepPin;
     uint8_t dirPin;
     uint8_t axisNumber;
     bool invertDirectionPin;
-    static const uint8_t MS1Pin = MS1;
-    static const uint8_t MS2Pin = MS2;
+    MotorDriver* driver;
 };
 
 extern Axis ra_axis;

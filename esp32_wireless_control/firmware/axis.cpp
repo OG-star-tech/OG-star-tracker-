@@ -3,8 +3,13 @@
 #include "axis.h"
 #include "uart.h"
 
-Axis ra_axis(1, AXIS1_DIR, RA_INVERT_DIR_PIN);
-Axis dec_axis(2, AXIS2_DIR, DEC_INVERT_DIR_PIN);
+#include "msx_motor_driver.h"
+
+MSxMotorDriver ra_driver(RA_MS1, RA_MS2);
+MSxMotorDriver dec_driver(DEC_MS1, DEC_MS2);
+
+Axis ra_axis(1, &ra_driver, AXIS1_DIR, RA_INVERT_DIR_PIN);
+Axis dec_axis(2, &dec_driver, AXIS2_DIR, DEC_INVERT_DIR_PIN);
 
 volatile bool ra_axis_step_phase = 0;
 volatile bool dec_axis_step_phase = 0;
@@ -74,8 +79,10 @@ int64_t Position::toArcseconds(int degrees, int minutes, float seconds)
     return (degrees * 3600) + (minutes * 60) + static_cast<int>(seconds);
 }
 
-Axis::Axis(uint8_t axis, uint8_t dirPinforAxis, bool invertDirPin) : stepTimer(40000000)
+Axis::Axis(uint8_t axis, MotorDriver* motorDriver, uint8_t dirPinforAxis, bool invertDirPin) :
+    stepTimer(40000000)
 {
+    driver = motorDriver;
     axisNumber = axis;
     trackingDirection = c_DIRECTION;
     dirPin = dirPinforAxis;
@@ -199,26 +206,5 @@ void Axis::setDirection(bool directionArg)
 
 void Axis::setMicrostep(uint8_t microstep)
 {
-    switch (microstep)
-    {
-        case 8:
-            digitalWrite(MS1, LOW);
-            digitalWrite(MS2, LOW);
-            break;
-        case 16:
-            digitalWrite(MS1, HIGH);
-            digitalWrite(MS2, HIGH);
-            break;
-        case 32:
-            digitalWrite(MS1, HIGH);
-            digitalWrite(MS2, LOW);
-            break;
-        case 64:
-            digitalWrite(MS1, LOW);
-            digitalWrite(MS2, HIGH);
-            break;
-        default:
-            print_out("Invalid microstep value: %d", microstep);
-            break;
-    }
+    driver->setMicrosteps(microstep);
 }

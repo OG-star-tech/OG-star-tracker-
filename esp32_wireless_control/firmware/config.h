@@ -81,8 +81,10 @@
 #define AXIS2_DIR 18
 #define SPREAD_2 21
 // common pins
-#define MS1 23
-#define MS2 22
+#define RA_MS1 23
+#define RA_MS2 22
+#define DEC_MS1 23
+#define DEC_MS2 22
 #define EN12_n 17
 
 #endif

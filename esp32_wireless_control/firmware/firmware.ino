@@ -517,8 +517,6 @@ void setup()
     pinMode(AXIS1_STEP, OUTPUT);
     pinMode(AXIS1_DIR, OUTPUT);
     pinMode(EN12_n, OUTPUT);
-    pinMode(MS1, OUTPUT);
-    pinMode(MS2, OUTPUT);
     digitalWrite(AXIS1_STEP, LOW);
     digitalWrite(EN12_n, LOW);
     // handleExposureSettings();
