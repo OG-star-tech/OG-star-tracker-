@@ -90,7 +90,7 @@ const char* chineseLangHTMLStrings[numberOfHTMLStrings] = {
     "Number of Frames",         // STR_FRAMES
     "nº of frames",             // STR_NO_FRAMES
     "Pan Angle",                // STR_PAN_ANGLE
-    "hours (Ex. 6)",       // STR_DEGREES
+    "degrees (Ex. 3.45)",       // STR_DEGREES
     "Pan Direction",            // STR_PAN_DIRECTION
     "Left",                     // STR_LEFT
     "Right",                    // STR_RIGHT

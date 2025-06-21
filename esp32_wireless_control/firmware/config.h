@@ -1,9 +1,6 @@
 #ifndef CONFIG
 #define CONFIG
 
-#include "wifi_config.h"
-#include "pins_config.h"
-
 #define STEPPER_0_9 0 // 0.9 degree stepper motor
 #define STEPPER_1_8 1 // 1.8 degree stepper motor
 
@@ -11,13 +8,13 @@
  * Blanchon*/
 /*****USER DEFINED*****/
 // AP mode by default: ESP32 will create a wifi network which you can connect to
-//#define AP // comment this line if you want ESP32 to connect to your existing wifi network/hotspot
+#define AP // comment this line if you want ESP32 to connect to your existing wifi network/hotspot
 #define c_DIRECTION 1                // 1 is for north hemisphere and 0 for south hemisphere
 #define RA_INVERT_DIR_PIN 0          // if need to invert direction pin set to 1
 #define DEC_INVERT_DIR_PIN 0         // if need to invert direction pin set to 1
 #define DEFAULT_ENABLE_TRACKING 1    // set to 1 to enable tracking at startup
 #define DITHER_DISTANCE_X10_PIXELS 5 // set max distance to dither in multiple of 10 pixels
-#define MAX_CUSTOM_SLEW_RATE 2500     // Set max custom slew rate to X tracking rate
+#define MAX_CUSTOM_SLEW_RATE 400     // Set max custom slew rate to X tracking rate
 #define MIN_CUSTOM_SLEW_RATE 2       // Set min custom slew rate to X tracking rate
 
 #ifndef TRACKING_RATE
@@ -32,15 +29,6 @@
 #ifndef STEPPER_TYPE
 #define STEPPER_TYPE STEPPER_0_9 // 0.9 degree stepper motor
 #endif
-
-#if STEPPER_TYPE == STEPPER_0_9
-#	define STEPPER_STEPS_PER_REV 400
-#elif STEPPER_TYPE == STEPPER_1_8
-#	define STEPPER_STEPS_PER_REV 200
-#else
-#	error Unknown stepper motor type
-#endif
-
 // Configure the wifi settings if you are not using platformio
 #ifndef WIFI_SSID
 #define WIFI_SSID "OG Star Tracker" // change to your SSID
@@ -74,40 +62,23 @@
 #endif
 
 // LEDs for intervalometer status and general purpose status led
-#define INTERV_PIN SpinDir
-#define STATUS_LED SpinEnable // (Red)
+#define INTERV_PIN 25
+#define STATUS_LED 26
 #define LANG_EEPROM_ADDR 0
 #define PRESETS_EEPROM_START_LOCATION 1
 
 // Stepper driver pins -- intended for TMC2209 for now
 // AXIS 1 - RA
-#define AXIS1_STEP Y_STEP
-#define AXIS1_DIR Y_DIR
-//#define SPREAD_1 4
+#define AXIS1_STEP 5
+#define AXIS1_DIR 15
+#define SPREAD_1 4
 // AXIS 2 - DEC
-#define AXIS2_STEP Abort
-#define AXIS2_DIR Hold
-//#define SPREAD_2 SpinEnable
+#define AXIS2_STEP 19
+#define AXIS2_DIR 18
+#define SPREAD_2 21
 // common pins
-//#define MS1 23
-//#define MS2 22
-#define EN12_n MotorEnable
-
-#define TMC_R_SENSE	0.11f // Match to your driver
-#define AXIS_SERIAL_PORT Serial2
-#define AXIS_RX	X_STOP
-#define AXIS_TX	Z_DIR
-
-#define AXIS1_ADDR 0
-#define AXIS2_ADDR 1
-
-// LCD Display settings
-#define LCD_COLUMNS 16
-#define LCD_ROWS	2
-//#define LCD_COLUMNS 20
-//#define LCD_ROWS	4
-#define SDA_PIN		32
-#define SCL_PIN		33
-
+#define MS1 23
+#define MS2 22
+#define EN12_n 17
 
 #endif

@@ -5,4 +5,3 @@
 .vscode/launch.json
 .vscode/ipch
 compile_commands.json
-wifi_config.h
