@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <ArduinoJson.h>
 #include <ESPmDNS.h>
 #include <ErriezSerialTerminal.h>
@@ -18,9 +19,14 @@
 #include "web_languages.h"
 #include "website_strings.h"
 
+#include "display.h"
+
 SerialTerminal term(CLI_NEWLINE_CHAR, CLI_DELIMITER_CHAR);
 WebServer server(WEBSERVER_PORT);
 Languages language = EN;
+
+#include <Fadinglight.h>
+Fadinglight led_red(STATUS_LED, true, 20);
 
 void uartTask(void* pvParameters);
 void consoleTask(void* pvParameters);
@@ -491,6 +497,7 @@ void setup()
     // Start the debug serial connection
     setup_uart(&Serial, 115200);
 
+    display.begin();
 
     if (xTaskCreate(uartTask, "uart", 4096, NULL, 1, NULL))
     {
@@ -538,22 +545,22 @@ void setup()
 
 void loop()
 {
-    int delay_ticks = 0;
-    for (;;)
-    {
-        if (ra_axis.slewActive)
-        {
-            // Blink status LED if mount is in slew mode
-            digitalWrite(STATUS_LED, !digitalRead(STATUS_LED));
-            delay_ticks = 150; // Delay for 150 ms
-        }
-        else
-        {
-            // Turn on status LED if sidereal tracking is ON
-            digitalWrite(STATUS_LED, ra_axis.trackingActive ? HIGH : LOW);
-            delay_ticks = 1000; // Delay for 1 second
-        }
-        vTaskDelay(delay_ticks);
+    for (;;) {
+		if (ra_axis.slewActive)
+		{
+			// Blink status LED if mount is in slew mode
+			led_red.blink();
+		}
+		else if (ra_axis.trackingActive)
+		{
+			// Turn on status LED if sidereal tracking is ON
+			led_red.on();
+		}
+		else
+		{
+			led_red.off();
+		}
+		vTaskDelay(1);
     }
 }
 
