@@ -1,6 +1,10 @@
 #ifndef CONFIG
 #define CONFIG
 
+#ifdef HAVE_WIFI_CONFIG
+#include "wifi_config.h"
+#endif
+
 #define STEPPER_0_9 0 // 0.9 degree stepper motor
 #define STEPPER_1_8 1 // 1.8 degree stepper motor
 
