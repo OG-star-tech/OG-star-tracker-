@@ -8,7 +8,7 @@ class MSxMotorDriver: public MotorDriver
 public:
   MSxMotorDriver(uint8_t ms1Pin, uint8_t ms2Pin);
   ~MSxMotorDriver() {};
-  void setMicrosteps(uint8_t microsteps);
+  void setMicrosteps(uint16_t microsteps);
 
 private:
   uint8_t _ms1Pin;

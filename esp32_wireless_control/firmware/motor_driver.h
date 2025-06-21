@@ -7,7 +7,7 @@ class MotorDriver
 {
   public:
     MotorDriver() {};
-    virtual void setMicrosteps(uint8_t microsteps) = 0;
+    virtual void setMicrosteps(uint16_t microsteps) = 0;
 };
 
 #endif /* _MOTOR_DRIVER_H_ */

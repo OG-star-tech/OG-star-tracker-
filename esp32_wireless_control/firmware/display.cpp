@@ -25,7 +25,7 @@ Display::Display(uint8_t sda_pin, uint8_t scl_pin) : _sda_pin(sda_pin), _scl_pin
 void Display::begin()
 {
 	Serial1.end();
-	Serial1.begin(19200, SERIAL_8N1, 5, 4);
+	Serial1.begin(19200, SERIAL_8N1, D5, D4);
 	while(!Serial1);
     lcd.begin(LCD_COLUMNS, LCD_ROWS);
 
@@ -51,16 +51,16 @@ void Display::updateDisplay()
 	snprintf(line, LCD_COLUMNS+1, "%s", getCurrentStatusMessage());
 	lcd.print(line);
 
-//	int64_t position = ra_axis.getPosition();
-//	int64_t count = ra_axis.getAxisCount();
-//	lcd.setCursor(0, 1);
-//	int seconds = position/60;
-//	int milisec = (1000/60) * (position % 60);
-//	int sec = seconds % 60;
-//	int min = (seconds / 60) % 60;
-//	int hour = seconds / 3600;
-//	snprintf(line, LCD_COLUMNS+1, "%s%02d %02d' %02d.%03d\"", seconds < 0 ? "-":" " , abs(hour), abs(min), abs(sec), abs(milisec));
-//	lcd.print(line);
+	int64_t position = ra_axis.getPosition();
+	int64_t count = ra_axis.getAxisCount();
+	lcd.setCursor(0, 1);
+	int seconds = position/60;
+	int milisec = (1000/60) * (position % 60);
+	int sec = seconds % 60;
+	int min = (seconds / 60) % 60;
+	int hour = seconds / 3600;
+	snprintf(line, LCD_COLUMNS+1, "%s%02d %02d' %02d.%03d\"", seconds < 0 ? "-":" " , abs(hour), abs(min), abs(sec), abs(milisec));
+	lcd.print(line);
 }
 
 const char* Display::getCurrentStatusMessage()

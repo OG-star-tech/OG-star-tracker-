@@ -7,19 +7,20 @@
 
 extern HardwareTimer slewTimeOut;
 
+// Values below assume 64 micro steps with f_cpu @ 240MHz
 #if STEPPER_TYPE == STEPPER_0_9
 enum trackingRateS
 {
-    TRACKING_SIDEREAL = 2659383, // SIDEREAL (23h,56 min)
-    TRACKING_SOLAR = 2666667,    // SOLAR (24h)
-    TRACKING_LUNAR = 2723867,    // LUNAR (24h, 31 min)
+    TRACKING_SIDEREAL = 1994537, // SIDEREAL (23h,56 min)
+    TRACKING_SOLAR = 2000000,    // SOLAR (24h)
+    TRACKING_LUNAR = 2042900,    // LUNAR (24h, 31 min)
 };
 #else // stepper 1.8 deg
 enum trackingRateS
 {
-    TRACKING_SIDEREAL = 5318765, // SIDEREAL (23h,56 min)
-    TRACKING_SOLAR = 5333333,    // SOLAR (24h)
-    TRACKING_LUNAR = 5447735,    // LUNAR (24h, 31 min)
+    TRACKING_SIDEREAL = 3989074, // SIDEREAL (23h,56 min)
+    TRACKING_SOLAR = 4000000,    // SOLAR (24h)
+    TRACKING_LUNAR = 4085801,    // LUNAR (24h, 31 min)
 };
 #endif
 
@@ -63,11 +64,19 @@ class Axis
 
     trackingRateS trackingRate;
 
+    uint16_t getMicrostep() { return microStep; }
+
+    volatile int64_t position;
+    void resetPosition() { setPosition(0); }
+    void setPosition(int64_t pos) { position = pos; }
+    int64_t getPosition() { return position; }
+
   private:
     void setDirection(bool directionArg);
-    void setMicrostep(uint8_t microstep);
+    void setMicrostep(uint16_t microstep);
 
     HardwareTimer stepTimer;
+    uint16_t microStep;
     uint8_t stepPin;
     uint8_t dirPin;
     uint8_t axisNumber;
