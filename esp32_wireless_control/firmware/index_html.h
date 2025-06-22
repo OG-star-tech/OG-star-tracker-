@@ -619,9 +619,14 @@ const char html_content[] = R"=====(
                     <select aria-label="slew" id='slew-select' onchange="checkCustomSpeedSlew();">
                         <option value='2'>2 x %STR_TRACKING_RATE%</option>
                         <option value='8'>8</option>
+                        <option value='16'>16</option>
+                        <option value='32'>32</option>
                         <option value='50'>50</option>
+                        <option value='64'>64</option>
                         <option value='100'>100</option>
+                        <option value='128'>128</option>
                         <option value='200'>200</option>
+                        <option value='256'>256</option>
                         <option value='400'>400</option>
                         <option value='custom'>%STR_CUSTOM%</option>
                     </select>
@@ -649,9 +654,14 @@ const char html_content[] = R"=====(
                     <select aria-label="goto_ra" id='gotora-speed-select' onchange="checkCustomSpeedGoToRA();">
                         <option value='2'>2 x %STR_TRACKING_RATE%</option>
                         <option value='8'>8</option>
+                        <option value='16'>16</option>
+                        <option value='32'>32</option>
                         <option value='50'>50</option>
+                        <option value='64'>64</option>
                         <option value='100'>100</option>
+                        <option value='128'>128</option>
                         <option value='200'>200</option>
+                        <option value='256'>256</option>
                         <option value='400'>400</option>
                         <option value='custom'>%STR_CUSTOM%</option>
                     </select>

@@ -1,5 +1,5 @@
 #ifndef CONFIG
-#define CONFIG
+#define CONFIG 1
 
 #ifdef HAVE_WIFI_CONFIG
 #include "wifi_config.h"
@@ -9,6 +9,14 @@
 
 #define STEPPER_0_9 0 // 0.9 degree stepper motor
 #define STEPPER_1_8 1 // 1.8 degree stepper motor
+
+#define TRACKING_RATE_BOARD_V2	1
+#define TRACKING_RATE_D1_R32	2
+#define TRACKING_RATE_NATGEO	3
+
+//#define MOTOR_TRACKING_RATE	TRACKING_RATE_BOARD_V2
+//#define MOTOR_TRACKING_RATE	TRACKING_RATE_D1_R32
+#define MOTOR_TRACKING_RATE	TRACKING_RATE_NATGEO
 
 /*To build in Arduino IDE, install esp32 boards V3.0x and the Arduinojson library by Benoit
  * Blanchon*/

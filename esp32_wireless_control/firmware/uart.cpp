@@ -14,7 +14,11 @@
 QueueHandle_t uartq;
 SemaphoreHandle_t uart_tx_mutex;
 SemaphoreHandle_t uart_rx_mutex;
+#ifdef ARDUINO_USB_CDC_ON_BOOT
+USBCDC* _uart;
+#else
 HardwareSerial* _uart;
+#endif
 
 char rec_uart_buffer[MAX_UART_LINE_LEN];
 char tra_uart_buffer[MAX_UART_LINE_LEN];
@@ -51,7 +55,11 @@ void print_out_tbl(uint8_t index)
     xQueueSend(uartq, tra_uart_buffer, portMAX_DELAY);
 }
 
+#ifdef ARDUINO_USB_CDC_ON_BOOT
+void setup_uart(USBCDC* serial, long baudrate)
+#else
 void setup_uart(HardwareSerial* serial, long baudrate)
+#endif
 {
     _uart = serial;
     _uart->begin(baudrate);

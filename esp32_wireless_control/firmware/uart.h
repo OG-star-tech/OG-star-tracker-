@@ -21,7 +21,11 @@ extern SerialTerminal term;
 void print_out(const char* format, ...);
 void print_out_nonl(const char* format, ...);
 void print_out_tbl(uint8_t index);
+#ifdef ARDUINO_USB_CDC_ON_BOOT
+void setup_uart(USBCDC* serial, long baudrate);
+#else
 void setup_uart(HardwareSerial* serial, long baudrate);
+#endif
 void uart_task();
 
 #endif

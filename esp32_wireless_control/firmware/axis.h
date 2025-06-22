@@ -5,24 +5,9 @@
 #include "hardwaretimer.h"
 #include "motor_driver.h"
 
-extern HardwareTimer slewTimeOut;
+#include "tracking_rates.h"
 
-// Values below assume 64 micro steps with f_cpu @ 240MHz
-#if STEPPER_TYPE == STEPPER_0_9
-enum trackingRateS
-{
-    TRACKING_SIDEREAL = 1994537, // SIDEREAL (23h,56 min)
-    TRACKING_SOLAR = 2000000,    // SOLAR (24h)
-    TRACKING_LUNAR = 2042900,    // LUNAR (24h, 31 min)
-};
-#else // stepper 1.8 deg
-enum trackingRateS
-{
-    TRACKING_SIDEREAL = 3989074, // SIDEREAL (23h,56 min)
-    TRACKING_SOLAR = 4000000,    // SOLAR (24h)
-    TRACKING_LUNAR = 4085801,    // LUNAR (24h, 31 min)
-};
-#endif
+extern HardwareTimer slewTimeOut;
 
 class Position
 {

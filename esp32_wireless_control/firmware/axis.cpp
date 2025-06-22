@@ -172,7 +172,7 @@ void Axis::startTracking(trackingRateS rate, bool directionArg)
     setDirection(axisAbsoluteDirection);
     trackingActive = true;
     stepTimer.stop();
-    setMicrostep(64);
+    setMicrostep(TRACKER_MOTOR_MICROSTEPPING);
     stepTimer.start(trackingRate, true);
 }
 
@@ -184,7 +184,7 @@ void Axis::stopTracking()
 
 void Axis::gotoTarget(uint64_t rate, const Position& current, const Position& target)
 {
-    setMicrostep(64);
+    setMicrostep(TRACKER_MOTOR_MICROSTEPPING);
     int64_t deltaArcseconds = target.arcseconds - current.arcseconds;
 //    int64_t stepsToMove = deltaArcseconds / ARCSEC_PER_STEP;
     // Value of 60 refers to resolution of second, if 256 microsteps used. 60 for 1.8deg stepper, 120 for 0.9
@@ -221,7 +221,7 @@ void Axis::startSlew(uint64_t rate, bool directionArg)
     axisAbsoluteDirection = directionArg;
     setDirection(axisAbsoluteDirection);
     slewActive = true;
-    setMicrostep(64);
+    setMicrostep(TRACKER_MOTOR_MICROSTEPPING);
     slewTimeOut.start(12000, true);
     stepTimer.start(rate, true);
 }

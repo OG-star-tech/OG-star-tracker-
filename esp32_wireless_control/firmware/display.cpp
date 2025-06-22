@@ -40,7 +40,7 @@ void Display::begin()
     lcd.setBacklightRGBColor(255, 0, 0);
 
     if (xTaskCreate(displayTask, "display", 4096, this, 1, NULL))
-        print_out("started displayTask\r\n");
+        print_out("started displayTask");
 }
 
 void Display::updateDisplay()
@@ -52,7 +52,6 @@ void Display::updateDisplay()
 	lcd.print(line);
 
 	int64_t position = ra_axis.getPosition();
-	int64_t count = ra_axis.getAxisCount();
 	lcd.setCursor(0, 1);
 	int seconds = position/60;
 	int milisec = (1000/60) * (position % 60);
@@ -120,6 +119,6 @@ void Display::displayTask(void* pvParameters)
     for (;;)
     {
         disp->updateDisplay();
-        vTaskDelay(500 * portTICK_PERIOD_MS);
+        vTaskDelay(1000 * portTICK_PERIOD_MS);
     }
 }
