@@ -102,7 +102,7 @@ const char* germanLangHTMLStrings[numberOfHTMLStrings] = {
     "und geben Sie dann die Koordinaten des Ziels ein\n", // STR_GOTO_RA_HINT
     "Start Goto RA",                                      // STR_START_GOTO_RA
     "Stop Goto RA",                                       // STR_STOP_GOTO_RA
-    "Verfolgung am Ende Deaktivieren",                    // STR_ENABLE_TRACKING
+    "Behalten Sie die Verfolgung am Ende bei",                    // STR_ENABLE_TRACKING
     "Nein",                                               // STR_NO
     "Ja",                                                 // STR_YES
     "Zittern",                                            // STR_DITHER

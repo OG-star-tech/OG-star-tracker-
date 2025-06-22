@@ -102,7 +102,7 @@ const char* chineseLangHTMLStrings[numberOfHTMLStrings] = {
     "然后输入目标坐标\n",      // STR_GOTO_RA_HINT
     "Start Goto RA",           // STR_START_GOTO_RA
     "Stop Goto RA",            // STR_STOP_GOTO_RA
-    "Disable Tracking On End", // STR_ENABLE_TRACKING
+    "Keep Tracking On End", // STR_ENABLE_TRACKING
     "No",                      // STR_NO
     "Yes",                     // STR_YES
     "Dither",                  // STR_DITHER
