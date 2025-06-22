@@ -301,8 +301,8 @@ const char html_content[] = R"=====(
                 } else if (directionArg == 'right') {
                     direction = 1;
                 }
-                var index = document.getElementById('slew-select').selectedIndex;
-                if (index == 6) {
+                var value = document.getElementById('slew-select').value;
+                if (value == 'custom') {
                     var speed = document.getElementById('custom-speed').value;
                 } else {
                     var speed = document.getElementById('slew-select').value;
@@ -312,8 +312,8 @@ const char html_content[] = R"=====(
             }
 
             function checkCustomSpeedSlew() {
-                var index = document.getElementById('slew-select').selectedIndex;
-                if (index == 6) {
+                var value = document.getElementById('slew-select').value;
+                if (value == 'custom') {
                     document.getElementById('custom-speed-text').style.display = 'block';
                     document.getElementById('custom-speed').style.display = 'flex';
                 } else {
@@ -323,8 +323,8 @@ const char html_content[] = R"=====(
             }
 
             function checkCustomSpeedGoToRA() {
-                var index = document.getElementById('gotora-speed-select').selectedIndex;
-                if (index == 6) {
+                var value = document.getElementById('gotora-speed-select').value;
+                if (value == 'custom') {
                     document.getElementById('custom-gotora-speed-text').style.display = 'block';
                     document.getElementById('custom-gotora-speed').style.display = 'flex';
                 } else {
@@ -530,8 +530,8 @@ const char html_content[] = R"=====(
             function sendGoToRAInformation() {
                 var currentRA = parseCurrentRAInput();
                 var targetRA = parseTargetRAInput();
-                var index = document.getElementById('gotora-speed-select').selectedIndex;
-                if (index == 6) {
+                var value = document.getElementById('gotora-speed-select').value;
+                if (value == 'custom') {
                     var speed = document.getElementById('custom-gotora-speed').value;
                 } else {
                     var speed = document.getElementById('gotora-speed-select').value;
