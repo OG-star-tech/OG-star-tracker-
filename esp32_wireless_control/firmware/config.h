@@ -37,11 +37,8 @@
 #define WIFI_PASSWORD "password123" // change to your password, must be 8+ characters
 #endif
 // If you are using AP mode, you can access the website using the below URL
-#ifndef WEBSITE_NAME
-#define WEBSITE_NAME "www.tracker.com"
-#endif
-#ifndef DNS_PORT
-#define DNS_PORT 53
+#ifndef MDNS_NAME
+#define MDNS_NAME "ogtracker"
 #endif
 #ifndef WEBSERVER_PORT
 #define WEBSERVER_PORT 80

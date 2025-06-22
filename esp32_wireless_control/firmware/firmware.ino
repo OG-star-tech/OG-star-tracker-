@@ -470,7 +470,7 @@ void setupWireless()
 #endif
 
     print_out("Starting mDNS responder");
-    if (!MDNS.begin("ogtracker"))
+    if (!MDNS.begin(MDNS_NAME))
     {
 		print_out("Error starting mDNS responder");
 		return;
