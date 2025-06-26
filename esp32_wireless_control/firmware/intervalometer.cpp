@@ -47,6 +47,10 @@ void Intervalometer::startCapture()
 {
     currentState = PRE_DELAY;
     intervalometerActive = true;
+    startCaptureTickCount = xTaskGetTickCount();
+    captureDurationTickCount = pdMS_TO_TICKS((currentSettings.preDelay +
+        currentSettings.exposures * currentSettings.exposureTime +
+        (currentSettings.exposures - 1) * currentSettings.delayTime)*1000);
 }
 
 /* MODES:
@@ -67,6 +71,7 @@ void Intervalometer::run()
             digitalWrite(triggerPin, LOW);
             intervalometerActive = false;
             exposures_taken = 0;
+            current_exposure = 0;
             frames_taken = 0;
             timerStarted = false;
             axisMoving = false;
@@ -81,6 +86,7 @@ void Intervalometer::run()
 
             if (!timerStarted)
             {
+
                 print_out("Intervalometer: PREDELAY_START");
                 if ((currentSettings.mode == DAY_TIME_LAPSE ||
                      currentSettings.mode == DAY_TIME_LAPSE_PAN) &&
@@ -123,6 +129,7 @@ void Intervalometer::run()
                 {
                     intervalometerTimer.start(2000 * currentSettings.exposureTime, false);
                 }
+                current_exposure++;
                 timerStarted = true;
             }
             if (nextState)
@@ -236,6 +243,7 @@ void Intervalometer::run()
                 print_out("Intervalometer: rewind_start");
                 axisMoving = true;
                 exposures_taken = 0;
+                current_exposure = 0;
                 frames_taken++;
                 ra_axis.setAxisTargetCount(0);
                 if (ra_axis.targetCount != ra_axis.axisCountValue)

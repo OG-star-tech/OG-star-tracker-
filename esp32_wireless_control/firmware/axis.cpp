@@ -168,8 +168,7 @@ void Axis::startTracking(trackingRateS rate, bool directionArg)
 {
     trackingRate = rate;
     trackingDirection = directionArg;
-    axisAbsoluteDirection = directionArg;
-    setDirection(axisAbsoluteDirection);
+    setDirection(directionArg);
     trackingActive = true;
     stepTimer.stop();
     setMicrostep(TRACKER_MOTOR_MICROSTEPPING);
@@ -188,7 +187,11 @@ void Axis::gotoTarget(uint64_t rate, const Position& current, const Position& ta
     int64_t deltaArcseconds = target.arcseconds - current.arcseconds;
 //    int64_t stepsToMove = deltaArcseconds / ARCSEC_PER_STEP;
     // Value of 60 refers to resolution of second, if 256 microsteps used. 60 for 1.8deg stepper, 120 for 0.9
-    int64_t stepsToMove = (deltaArcseconds * 60) / (MAX_MICROSTEPS/(microStep ? microStep : 1));
+//    int64_t stepsToMove = (deltaArcseconds * 60) / (MAX_MICROSTEPS/(microStep ? microStep : 1));
+//    int64_t stepsToMove = (deltaArcseconds * 281.6) / (MAX_MICROSTEPS/(microStep ? microStep : 1));
+//    int64_t stepsToMove = (deltaArcseconds * 277.3) / (MAX_MICROSTEPS/(microStep ? microStep : 1));
+
+    int64_t stepsToMove = (deltaArcseconds * STEPS_PER_SECOND_256MICROSTEP) / (MAX_MICROSTEPS/(microStep ? microStep : 1));
     bool direction = stepsToMove > 0;
 
     setPosition(current.arcseconds*4);
@@ -200,8 +203,7 @@ void Axis::gotoTarget(uint64_t rate, const Position& current, const Position& ta
         counterActive = true;
         goToTarget = true;
         stepTimer.stop();
-        axisAbsoluteDirection = direction;
-        setDirection(axisAbsoluteDirection);
+        setDirection(direction);
         slewActive = true;
         stepTimer.start(rate, true);
     }
@@ -218,8 +220,7 @@ void Axis::stopGotoTarget()
 void Axis::startSlew(uint64_t rate, bool directionArg)
 {
     stepTimer.stop();
-    axisAbsoluteDirection = directionArg;
-    setDirection(axisAbsoluteDirection);
+    setDirection(directionArg);
     slewActive = true;
     setMicrostep(TRACKER_MOTOR_MICROSTEPPING);
     slewTimeOut.start(12000, true);
@@ -264,6 +265,7 @@ int64_t Axis::getAxisCount()
 
 void Axis::setDirection(bool directionArg)
 {
+	axisAbsoluteDirection = directionArg;
     digitalWrite(dirPin, directionArg ^ invertDirectionPin);
 }
 

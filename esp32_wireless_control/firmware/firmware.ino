@@ -19,14 +19,40 @@
 #include "web_languages.h"
 #include "website_strings.h"
 
+#if HAVE_DISPLAY
 #include "display.h"
+#endif
 
 SerialTerminal term(CLI_NEWLINE_CHAR, CLI_DELIMITER_CHAR);
 WebServer server(WEBSERVER_PORT);
 Languages language = EN;
 
 #include <Fadinglight.h>
-Fadinglight led_red(STATUS_LED, true, 20);
+
+class MyFadinglight : public BaseFader
+{
+public:
+	MyFadinglight(int pin, bool logarithmic = true, int fade_speed = 30, bool invert = false)
+        : BaseFader(logarithmic, fade_speed), pin_(pin), _invert(invert)
+    {
+    }
+
+    void write(int state) override
+    {
+        if(!_invert)
+            analogWrite(pin_, state);
+        else
+            analogWrite(pin_, 255-state);
+    }
+
+private:
+    int pin_;
+    bool _invert;
+
+};
+
+
+MyFadinglight led_red(STATUS_LED, true, 20, STATUS_LED_INVERTED);
 
 void uartTask(void* pvParameters);
 void consoleTask(void* pvParameters);
@@ -497,7 +523,9 @@ void setup()
     // Start the debug serial connection
     setup_uart(&Serial, 115200);
 
+#if HAVE_DISPLAY
     display.begin();
+#endif
 
     if (xTaskCreate(uartTask, "uart", 4096, NULL, 1, NULL))
     {

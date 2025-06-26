@@ -7,6 +7,7 @@
 #if STEPPER_TYPE == STEPPER_0_9
 // gear ratio 101.25, 0.9deg motor, 64?? msteps, f_cpu@240MHz
 #define TRACKER_MOTOR_MICROSTEPPING 64
+#define STEPS_PER_SECOND_256MICROSTEP	120
 enum trackingRateS
 {
     TRACKING_SIDEREAL = 2659383, // SIDEREAL (23h,56 min)
@@ -16,6 +17,7 @@ enum trackingRateS
 #else // stepper 1.8 deg
 // gear ratio 101.25, 1.8deg motor, 64?? msteps, f_cpu@240MHz
 #define TRACKER_MOTOR_MICROSTEPPING 64
+#define STEPS_PER_SECOND_256MICROSTEP	60
 enum trackingRateS
 {
     TRACKING_SIDEREAL = 5318765, // SIDEREAL (23h,56 min)
@@ -34,6 +36,7 @@ enum trackingRateS
 //};
 // gear ratio 101.25, 1.8deg motor, 64?? msteps, f_cpu@240MHz
 #define TRACKER_MOTOR_MICROSTEPPING 64
+#define STEPS_PER_SECOND_256MICROSTEP	60
 enum trackingRateS
 {
     TRACKING_SIDEREAL = 5318765, // SIDEREAL (23h,56 min)
@@ -42,13 +45,21 @@ enum trackingRateS
 };
 
 #elif MOTOR_TRACKING_RATE == TRACKING_RATE_NATGEO
-// gear ratio 475.2, 1.8deg motor, 16 msteps, f_cpu@240MHz
+//// gear ratio 475.2, 1.8deg motor, 16 msteps, f_cpu@240MHz
 #define TRACKER_MOTOR_MICROSTEPPING 16
+#define STEPS_PER_SECOND_256MICROSTEP	277.3
+//enum trackingRateS
+//{
+//    TRACKING_SIDEREAL = 3399779, // SIDEREAL (23h,56 min)
+//    TRACKING_SOLAR = 3409091,    // SOLAR (24h)
+//    TRACKING_LUNAR = 3482217,    // LUNAR (24h, 31 min)
+//};
+// gear ratio 468, 1.8deg motor, 16 msteps, f_cpu@240MHz
 enum trackingRateS
 {
-    TRACKING_SIDEREAL = 3399779, // SIDEREAL (23h,56 min)
-    TRACKING_SOLAR = 3409091,    // SOLAR (24h)
-    TRACKING_LUNAR = 3482217,    // LUNAR (24h, 31 min)
+    TRACKING_SIDEREAL = 3452083, // SIDEREAL (23h,56 min)
+    TRACKING_SOLAR = 3461538,    // SOLAR (24h)
+    TRACKING_LUNAR = 3535789,    // LUNAR (24h, 31 min)
 };
 #else
 #	error Unknown tracking rate setting

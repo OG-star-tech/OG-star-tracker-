@@ -1,9 +1,13 @@
-#include "display.h"
 #include "config.h"
+
+#if HAVE_DISPLAY
+
+#include "display.h"
 #include "uart.h"
 #include "axis.h"
 #include "intervalometer.h"
 #include "web_languages.h"
+#include <inttypes.h>
 
 extern Languages language;
 
@@ -28,16 +32,16 @@ void Display::begin()
 	Serial1.begin(19200, SERIAL_8N1, D5, D4);
 	while(!Serial1);
     lcd.begin(LCD_COLUMNS, LCD_ROWS);
+    lcd.clear();
+    lcd.setBacklightRGBColor(255, 0, 0);
 
 
 //	Wire.end();
 //	Wire.begin(_sda_pin, _scl_pin);	// define SDA and SCL pins
 //	Wire.setClock(400000UL);
 //    lcd.init();
-    lcd.clear();
+//    lcd.clear();
 //	lcd.setBacklight(1);// Switch backlight LED on
-
-    lcd.setBacklightRGBColor(255, 0, 0);
 
     if (xTaskCreate(displayTask, "display", 4096, this, 1, NULL))
         print_out("started displayTask");
@@ -46,7 +50,12 @@ void Display::begin()
 void Display::updateDisplay()
 {
 	lcd.setCursor(0, 0);
-	lcd.print("                ");
+	for(int i = 0; i < LCD_COLUMNS; i++)
+	{
+		line[i] = ' ';
+	}
+	line[LCD_COLUMNS] = '\0';
+	lcd.print(line);
 	lcd.setCursor(0, 0);
 	snprintf(line, LCD_COLUMNS+1, "%s", getCurrentStatusMessage());
 	lcd.print(line);
@@ -58,8 +67,48 @@ void Display::updateDisplay()
 	int sec = seconds % 60;
 	int min = (seconds / 60) % 60;
 	int hour = seconds / 3600;
-	snprintf(line, LCD_COLUMNS+1, "%s%02d %02d' %02d.%03d\"", seconds < 0 ? "-":" " , abs(hour), abs(min), abs(sec), abs(milisec));
+	snprintf(line, LCD_COLUMNS+1, "RA:%s%02d %02d' %02d.%03d\"", seconds < 0 ? "-":" " , abs(hour), abs(min), abs(sec), abs(milisec));
 	lcd.print(line);
+
+#if LCD_ROWS > 2
+	static bool line2Cleared = false;
+	if(intervalometer.intervalometerActive)
+	{
+		lcd.setCursor(0, 2);
+		uint16_t exposures = intervalometer.currentSettings.exposures;
+		uint16_t currentExposure = intervalometer.getCurrentExposure();
+		uint16_t exposuresTaken = intervalometer.getExposuresTaken();
+		snprintf(line, LCD_COLUMNS+1, "Exposures: %" PRIu16 "/%" PRIu16 "/%" PRIu16, exposuresTaken, currentExposure, exposures);
+		lcd.print(line);
+
+		line2Cleared = false;
+	} else if(!line2Cleared){
+		lcd.setCursor(0, 2);
+		lcd.print("                    ");
+		line2Cleared = true;
+	}
+#endif
+#if LCD_ROWS > 3
+	static bool line3Cleared = false;
+	if(intervalometer.intervalometerActive)
+	{
+		lcd.setCursor(0, 3);
+		TickType_t currentTicks = xTaskGetTickCount();
+		TickType_t startCaptureTickCount = intervalometer.getStartCaptureTickCount();
+		TickType_t captureDurationTickCount = intervalometer.getCaptureDurationTickCount();
+
+		snprintf(line, LCD_COLUMNS+1, "Time: %.1f/%.1f",
+				pdTICKS_TO_MS(currentTicks - startCaptureTickCount)/1000.0,
+				pdTICKS_TO_MS(captureDurationTickCount)/1000.0);
+		lcd.print(line);
+
+		line3Cleared = false;
+	} else if(!line3Cleared){
+		lcd.setCursor(0, 3);
+		lcd.print("                    ");
+		line3Cleared = true;
+	}
+#endif
 }
 
 const char* Display::getCurrentStatusMessage()
@@ -122,3 +171,5 @@ void Display::displayTask(void* pvParameters)
         vTaskDelay(1000 * portTICK_PERIOD_MS);
     }
 }
+
+#endif /* HAVE_DISPLAY */
