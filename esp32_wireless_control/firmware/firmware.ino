@@ -414,7 +414,7 @@ void handleVersion()
 
 void setupWireless()
 {
-#ifdef AP
+#ifdef AP_MODE
     WiFi.mode(WIFI_MODE_AP);
     WiFi.softAP(WIFI_SSID, WIFI_PASSWORD);
     vTaskDelay(500);
