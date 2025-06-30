@@ -1,0 +1,100 @@
+// This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
+
+#include "bsc5.h"
+
+bsc5_t::bsc5_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, bsc5_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = this;
+    m_bsc5_header = 0;
+    m_bsc5_entries = 0;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void bsc5_t::_read() {
+    m_bsc5_header = new header_t(m__io, this, m__root);
+    m_bsc5_entries = new std::vector<entry_t*>();
+    const int l_bsc5_entries = -(bsc5_header()->starn());
+    for (int i = 0; i < l_bsc5_entries; i++) {
+        m_bsc5_entries->push_back(new entry_t(m__io, this, m__root));
+    }
+}
+
+bsc5_t::~bsc5_t() {
+    _clean_up();
+}
+
+void bsc5_t::_clean_up() {
+    if (m_bsc5_header) {
+        delete m_bsc5_header; m_bsc5_header = 0;
+    }
+    if (m_bsc5_entries) {
+        for (std::vector<entry_t*>::iterator it = m_bsc5_entries->begin(); it != m_bsc5_entries->end(); ++it) {
+            delete *it;
+        }
+        delete m_bsc5_entries; m_bsc5_entries = 0;
+    }
+}
+
+bsc5_t::header_t::header_t(kaitai::kstream* p__io, bsc5_t* p__parent, bsc5_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void bsc5_t::header_t::_read() {
+    m_star0 = m__io->read_s4be();
+    m_star1 = m__io->read_s4be();
+    m_starn = m__io->read_s4be();
+    m_stnum = m__io->read_s4be();
+    m_mprop = m__io->read_s4be();
+    m_nmag = m__io->read_s4be();
+    m_nbent = m__io->read_u4be();
+}
+
+bsc5_t::header_t::~header_t() {
+    _clean_up();
+}
+
+void bsc5_t::header_t::_clean_up() {
+}
+
+bsc5_t::entry_t::entry_t(kaitai::kstream* p__io, bsc5_t* p__parent, bsc5_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void bsc5_t::entry_t::_read() {
+    m_xno = m__io->read_f4be();
+    m_sra0 = m__io->read_f8be();
+    m_sdec0 = m__io->read_f8be();
+    m_is = kaitai::kstream::bytes_to_str(m__io->read_bytes(2), std::string("ASCII"));
+    m_mag = m__io->read_u2be();
+    m_xrpm = m__io->read_f4be();
+    m_xdpm = m__io->read_f4be();
+}
+
+bsc5_t::entry_t::~entry_t() {
+    _clean_up();
+}
+
+void bsc5_t::entry_t::_clean_up() {
+}

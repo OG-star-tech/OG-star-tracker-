@@ -158,10 +158,10 @@ Axis::Axis(uint8_t axis, MotorDriver* motorDriver, uint8_t dirPinforAxis, bool i
             break;
     }
 
-    if (DEFAULT_ENABLE_TRACKING == 1 && axisNumber == 1)
-    {
-        startTracking(trackingRate, trackingDirection);
-    }
+//    if (DEFAULT_ENABLE_TRACKING == 1 && axisNumber == 1)
+//    {
+//        startTracking(trackingRate, trackingDirection);
+//    }
 }
 
 void Axis::startTracking(trackingRateS rate, bool directionArg)
@@ -194,7 +194,7 @@ void Axis::gotoTarget(uint64_t rate, const Position& current, const Position& ta
     int64_t stepsToMove = (deltaArcseconds * STEPS_PER_SECOND_256MICROSTEP) / (MAX_MICROSTEPS/(microStep ? microStep : 1));
     bool direction = stepsToMove > 0;
 
-    setPosition(current.arcseconds*4);
+    setPosition(current.arcseconds*STEPS_PER_SECOND_256MICROSTEP);
     resetAxisCount();
     setAxisTargetCount(stepsToMove);
 

@@ -9,15 +9,17 @@
 #include "web_languages.h"
 #include <inttypes.h>
 
+#include "bsc5/bsc5ra.h"
+
 extern Languages language;
 
-#include "Adafruit_USB_RGB_Backpack.h"
-Adafruit_USB_RGB_Backpack lcd(Serial1);
+//#include "Adafruit_USB_RGB_Backpack.h"
+//Adafruit_USB_RGB_Backpack lcd(Serial1);
 
 Display display(SDA_PIN, SCL_PIN);
 
-//#include <LiquidCrystal_I2C.h> // Use an up to date library version, which has the init method
-//LiquidCrystal_I2C lcd(0x27, LCD_COLUMNS, LCD_ROWS);  // set the LCD address to 0x27 for a 16 chars and 2 line display
+#include <LiquidCrystal_I2C.h> // Use an up to date library version, which has the init method
+LiquidCrystal_I2C lcd(0x27, LCD_COLUMNS, LCD_ROWS);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
 char line[LCD_COLUMNS+1];
 
@@ -28,20 +30,20 @@ Display::Display(uint8_t sda_pin, uint8_t scl_pin) : _sda_pin(sda_pin), _scl_pin
 
 void Display::begin()
 {
-	Serial1.end();
-	Serial1.begin(19200, SERIAL_8N1, D5, D4);
-	while(!Serial1);
-    lcd.begin(LCD_COLUMNS, LCD_ROWS);
-    lcd.clear();
-    lcd.setBacklightRGBColor(255, 0, 0);
-
-
-//	Wire.end();
-//	Wire.begin(_sda_pin, _scl_pin);	// define SDA and SCL pins
-//	Wire.setClock(400000UL);
-//    lcd.init();
+//	Serial1.end();
+//	Serial1.begin(19200, SERIAL_8N1, D5, D4);
+//	while(!Serial1);
+//    lcd.begin(LCD_COLUMNS, LCD_ROWS);
 //    lcd.clear();
-//	lcd.setBacklight(1);// Switch backlight LED on
+//    lcd.setBacklightRGBColor(255, 0, 0);
+
+
+	Wire.end();
+	Wire.begin(_sda_pin, _scl_pin);	// define SDA and SCL pins
+	Wire.setClock(400000UL);
+    lcd.init();
+    lcd.clear();
+	lcd.setBacklight(1);// Switch backlight LED on
 
     if (xTaskCreate(displayTask, "display", 4096, this, 1, NULL))
         print_out("started displayTask");
@@ -62,12 +64,13 @@ void Display::updateDisplay()
 
 	int64_t position = ra_axis.getPosition();
 	lcd.setCursor(0, 1);
-	int seconds = position/60;
-	int milisec = (1000/60) * (position % 60);
+	int seconds = position/STEPS_PER_SECOND_256MICROSTEP;
+	int milisec = (1000/STEPS_PER_SECOND_256MICROSTEP) * (position - STEPS_PER_SECOND_256MICROSTEP*seconds);
 	int sec = seconds % 60;
 	int min = (seconds / 60) % 60;
 	int hour = seconds / 3600;
-	snprintf(line, LCD_COLUMNS+1, "RA:%s%02d %02d' %02d.%03d\"", seconds < 0 ? "-":" " , abs(hour), abs(min), abs(sec), abs(milisec));
+//	snprintf(line, LCD_COLUMNS+1, "RA:%s%02d %02d' %02d.%03d\"", seconds < 0 ? "-":" " , abs(hour), abs(min), abs(sec), abs(milisec));
+	snprintf(line, LCD_COLUMNS+1, "%s%02d %02d' %02d.%03d\"", seconds < 0 ? "-":" " , abs(hour), abs(min), abs(sec), abs(milisec));
 	lcd.print(line);
 
 #if LCD_ROWS > 2
@@ -168,7 +171,7 @@ void Display::displayTask(void* pvParameters)
     for (;;)
     {
         disp->updateDisplay();
-        vTaskDelay(1000 * portTICK_PERIOD_MS);
+        vTaskDelay(500 * portTICK_PERIOD_MS);
     }
 }
 

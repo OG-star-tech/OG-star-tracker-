@@ -1,0 +1,69 @@
+meta:
+  id: bsc5
+  endian: be
+  file-extension: bsc5
+
+seq:
+  - id: bsc5_header
+    type: header
+  - id: bsc5_entries
+    type: entry
+    repeat: expr
+    repeat-expr: -bsc5_header.starn
+
+types:
+  header:
+    seq:
+      - id: star0
+        type: s4
+      - id: star1
+        type: s4
+      - id: starn
+        type: s4
+      - id: stnum
+        type: s4
+      - id: mprop
+        type: s4
+      - id: nmag
+        type: s4
+      - id: nbent
+        type: u4
+  entry:
+    seq:
+      - id: xno
+        type: f4
+      - id: sra0
+        type: f8
+      - id: sdec0
+        type: f8
+      - id: is
+        type: str
+        size: 2
+        encoding: ASCII
+      - id: mag
+        type: u2
+      - id: xrpm
+        type: f4
+      - id: xdpm
+        type: f4
+
+                    # Integer*4 STAR0=0 Subtract from star number to get sequence number
+                    # # Integer*4 STAR1=1 First star number in file
+                    # # Integer*4 STARN=9110    Number of stars in file
+                    #                           # (if negative, position is in J2000)
+                    #                           # Integer*4 STNUM=1 0 if no star i.d. numbers are present
+                    #                                                     # 1 if star i.d. numbers are in catalog file
+                    #                                                                               # 2 if star i.d. numbers are  in file
+                    #                                                                               # Logical*4 MPROP=1 1 if proper motion is included
+                    #                                                                                                         # 0 if no proper motion is included
+                    #                                                                                                         # Integer*4 NMAG=-1 Number of magnitudes present (-1=J2000 instead of B1950)
+                    #                                                                                                         # Integer*4 NBENT=32  Number of bytes per star entry
+                    #
+                    #
+                    #                                                                                                         # Real*4 XNO    Catalog number of star
+                    #                                                                                                         # Real*8 SRA0   B1950 Right Ascension (radians)
+                    #                                                                                                         # Real*8 SDEC0    B1950 Declination (radians)
+                    #                                                                                                         # Character*2 IS    Spectral type (2 characters)
+                    #                                                                                                         # Integer*2 MAG   V Magnitude * 100
+                    #                                                                                                         # Real*4 XRPM   R.A. proper motion (radians per year)
+                    #                                                                                                         # Real*4 XDPM   Dec. proper motion (radians per year)

@@ -1,0 +1,114 @@
+#ifndef BSC5_H_
+#define BSC5_H_
+
+// This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
+
+#include "kaitai/kaitaistruct.h"
+#include <stdint.h>
+#include <vector>
+
+#if KAITAI_STRUCT_VERSION < 9000L
+#error "Incompatible Kaitai Struct C++/STL API: version 0.9 or later is required"
+#endif
+
+class bsc5_t : public kaitai::kstruct {
+
+public:
+    class header_t;
+    class entry_t;
+
+    bsc5_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, bsc5_t* p__root = 0);
+
+private:
+    void _read();
+    void _clean_up();
+
+public:
+    ~bsc5_t();
+
+    class header_t : public kaitai::kstruct {
+
+    public:
+
+        header_t(kaitai::kstream* p__io, bsc5_t* p__parent = 0, bsc5_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~header_t();
+
+    private:
+        int32_t m_star0;
+        int32_t m_star1;
+        int32_t m_starn;
+        int32_t m_stnum;
+        int32_t m_mprop;
+        int32_t m_nmag;
+        uint32_t m_nbent;
+        bsc5_t* m__root;
+        bsc5_t* m__parent;
+
+    public:
+        int32_t star0() const { return m_star0; }
+        int32_t star1() const { return m_star1; }
+        int32_t starn() const { return m_starn; }
+        int32_t stnum() const { return m_stnum; }
+        int32_t mprop() const { return m_mprop; }
+        int32_t nmag() const { return m_nmag; }
+        uint32_t nbent() const { return m_nbent; }
+        bsc5_t* _root() const { return m__root; }
+        bsc5_t* _parent() const { return m__parent; }
+    };
+
+    class entry_t : public kaitai::kstruct {
+
+    public:
+
+        entry_t(kaitai::kstream* p__io, bsc5_t* p__parent = 0, bsc5_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~entry_t();
+
+    private:
+        float m_xno;
+        double m_sra0;
+        double m_sdec0;
+        std::string m_is;
+        uint16_t m_mag;
+        float m_xrpm;
+        float m_xdpm;
+        bsc5_t* m__root;
+        bsc5_t* m__parent;
+
+    public:
+        float xno() const { return m_xno; }
+        double sra0() const { return m_sra0; }
+        double sdec0() const { return m_sdec0; }
+        std::string is() const { return m_is; }
+        uint16_t mag() const { return m_mag; }
+        float xrpm() const { return m_xrpm; }
+        float xdpm() const { return m_xdpm; }
+        bsc5_t* _root() const { return m__root; }
+        bsc5_t* _parent() const { return m__parent; }
+    };
+
+private:
+    header_t* m_bsc5_header;
+    std::vector<entry_t*>* m_bsc5_entries;
+    bsc5_t* m__root;
+    kaitai::kstruct* m__parent;
+
+public:
+    header_t* bsc5_header() const { return m_bsc5_header; }
+    std::vector<entry_t*>* bsc5_entries() const { return m_bsc5_entries; }
+    bsc5_t* _root() const { return m__root; }
+    kaitai::kstruct* _parent() const { return m__parent; }
+};
+
+#endif  // BSC5_H_

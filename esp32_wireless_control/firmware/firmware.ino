@@ -23,6 +23,8 @@
 #include "display.h"
 #endif
 
+#include "bsc5/bsc5ra.h"
+
 SerialTerminal term(CLI_NEWLINE_CHAR, CLI_DELIMITER_CHAR);
 WebServer server(WEBSERVER_PORT);
 Languages language = EN;
@@ -556,6 +558,11 @@ void setup()
     digitalWrite(EN12_n, LOW);
     // handleExposureSettings();
 
+    if (DEFAULT_ENABLE_TRACKING == 1)
+    {
+        ra_axis.startTracking(ra_axis.trackingRate, ra_axis.trackingDirection);
+    }
+
     // Initialize Wifi and web server
     setupWireless();
 
@@ -569,6 +576,12 @@ void setup()
         print_out_tbl(TSK_START_INTERVALOMETER);
     if (xTaskCreatePinnedToCore(webserverTask, "webserver", 4096, NULL, 1, NULL, 0))
         print_out_tbl(TSK_START_WEBSERVER);
+
+
+    BSC5 bsc5(bsc5_BSC5ra_bsc5_start, bsc5_BSC5ra_bsc5_end);
+    bsc5.printHeader();
+    bsc5.printStar(0);
+
 }
 
 void loop()

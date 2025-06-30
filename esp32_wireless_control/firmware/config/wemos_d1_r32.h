@@ -3,7 +3,12 @@
 
 #include "pins_config.h"
 
+#undef RA_INVERT_DIR_PIN          // if need to invert direction pin set to 1
+#define RA_INVERT_DIR_PIN 1          // if need to invert direction pin set to 1
+
+
 /*****DO NOT MODIFY BELOW*****/
+#define MOTOR_TRACKING_RATE	TRACKING_RATE_D1_R32
 
 //#define TMC_DRIVER_MODEL 2208
 #define MICROSTEPPING_MOTOR_DRIVER USE_TMC_DRIVER_MICROSTEPPING
@@ -28,7 +33,7 @@
 
 #define EN12_n MotorEnable
 
-#define HAVE_DISPLAY 1
+#define HAVE_DISPLAY 0
 // LCD Display settings
 #define LCD_COLUMNS 16
 #define LCD_ROWS	2
