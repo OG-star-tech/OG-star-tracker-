@@ -50,7 +50,7 @@ void IRAM_ATTR stepTimerRA_ISR()
     uint8_t uStep = ra_axis.getMicrostep();
     if(ra_axis_step_phase)
     {
-		if(ra_axis.axisAbsoluteDirection)
+		if(ra_axis.axisAbsoluteDirection ^ ra_axis.trackingDirection)
 		{
 			position += MAX_MICROSTEPS/(uStep ? uStep : 1);
 		}
@@ -64,7 +64,7 @@ void IRAM_ATTR stepTimerRA_ISR()
     if (ra_axis.counterActive && ra_axis_step_phase)
     { // if counter active
         int temp = ra_axis.getAxisCount();
-        if(ra_axis.axisAbsoluteDirection)
+        if(ra_axis.axisAbsoluteDirection ^ ra_axis.trackingDirection)
         {
             temp++;
         }
@@ -166,7 +166,8 @@ Axis::Axis(uint8_t axis, MotorDriver* motorDriver, uint8_t dirPinforAxis, bool i
 //    }
 }
 
-void Axis::startTracking(trackingRateS rate, bool directionArg)
+//void Axis::startTracking(trackingRateS rate, bool directionArg)
+void Axis::startTracking(uint64_t rate, bool directionArg)
 {
     trackingRate = rate;
     trackingDirection = directionArg;
@@ -194,7 +195,7 @@ void Axis::gotoTarget(uint64_t rate, const Position& current, const Position& ta
 //    int64_t stepsToMove = (deltaArcseconds * 277.3) / (MAX_MICROSTEPS/(microStep ? microStep : 1));
 
     int64_t stepsToMove = (deltaArcseconds * STEPS_PER_SECOND_256MICROSTEP) / (MAX_MICROSTEPS/(microStep ? microStep : 1));
-    bool direction = stepsToMove > 0;
+    bool direction = (stepsToMove > 0) ^ trackingDirection;
 
     setPosition(current.arcseconds*STEPS_PER_SECOND_256MICROSTEP);
     resetAxisCount();

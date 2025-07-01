@@ -6,6 +6,14 @@
 //#undef RA_INVERT_DIR_PIN          // if need to invert direction pin set to 1
 //#define RA_INVERT_DIR_PIN 1          // if need to invert direction pin set to 1
 
+#define HAVE_ENCODER 1
+#define ENCODER_A_PIN Coolant
+#define ENCODER_B_PIN Resume
+
+#define HAVE_BUTTON 1
+#define BUTTON_PIN Hold
+
+
 /*****DO NOT MODIFY BELOW*****/
 #define MOTOR_TRACKING_RATE	TRACKING_RATE_NATGEO
 
@@ -27,8 +35,8 @@
 #define AXIS1_STEP Y_DIR
 #define AXIS1_DIR Y_STEP
 
-#define AXIS2_STEP Abort
-#define AXIS2_DIR Hold
+#define AXIS2_STEP A6
+#define AXIS2_DIR A7
 
 #define EN12_n MotorEnable
 

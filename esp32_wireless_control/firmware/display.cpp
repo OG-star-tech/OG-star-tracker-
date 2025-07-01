@@ -92,25 +92,29 @@ void Display::updateDisplay()
 	}
 #endif
 #if LCD_ROWS > 3
-	static bool line3Cleared = false;
-	if(intervalometer.intervalometerActive)
-	{
-		lcd.setCursor(0, 3);
-		TickType_t currentTicks = xTaskGetTickCount();
-		TickType_t startCaptureTickCount = intervalometer.getStartCaptureTickCount();
-		TickType_t captureDurationTickCount = intervalometer.getCaptureDurationTickCount();
+//	static bool line3Cleared = false;
+//	if(intervalometer.intervalometerActive)
+//	{
+//		lcd.setCursor(0, 3);
+//		TickType_t currentTicks = xTaskGetTickCount();
+//		TickType_t startCaptureTickCount = intervalometer.getStartCaptureTickCount();
+//		TickType_t captureDurationTickCount = intervalometer.getCaptureDurationTickCount();
+//
+//		snprintf(line, LCD_COLUMNS+1, "Time: %.1f/%.1f",
+//				pdTICKS_TO_MS(currentTicks - startCaptureTickCount)/1000.0,
+//				pdTICKS_TO_MS(captureDurationTickCount)/1000.0);
+//		lcd.print(line);
+//
+//		line3Cleared = false;
+//	} else if(!line3Cleared){
+//		lcd.setCursor(0, 3);
+//		lcd.print("                    ");
+//		line3Cleared = true;
+//	}
+	lcd.setCursor(0, 3);
+	snprintf(line, LCD_COLUMNS+1, "%10lld", ra_axis.trackingRate);
+	lcd.print(line);
 
-		snprintf(line, LCD_COLUMNS+1, "Time: %.1f/%.1f",
-				pdTICKS_TO_MS(currentTicks - startCaptureTickCount)/1000.0,
-				pdTICKS_TO_MS(captureDurationTickCount)/1000.0);
-		lcd.print(line);
-
-		line3Cleared = false;
-	} else if(!line3Cleared){
-		lcd.setCursor(0, 3);
-		lcd.print("                    ");
-		line3Cleared = true;
-	}
 #endif
 }
 

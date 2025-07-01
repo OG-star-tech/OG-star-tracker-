@@ -30,7 +30,8 @@ class Axis
     void setAxisCount(int64_t count);
     int64_t getAxisCount();
 
-    void startTracking(trackingRateS rate, bool directionArg);
+    void startTracking(uint64_t rate, bool directionArg);
+//    void startTracking(trackingRateS rate, bool directionArg);
     void stopTracking();
     void startSlew(uint64_t rate, bool directionArg);
     void stopSlew();
@@ -47,7 +48,8 @@ class Axis
     bool trackingDirection;
     volatile bool counterActive;
 
-    trackingRateS trackingRate;
+    uint64_t trackingRate;
+//    trackingRateS trackingRate;
 
     uint16_t getMicrostep() { return microStep; }
 

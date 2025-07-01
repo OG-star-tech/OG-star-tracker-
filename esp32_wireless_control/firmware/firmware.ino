@@ -19,6 +19,8 @@
 #include "web_languages.h"
 #include "website_strings.h"
 
+#include <EventButton.h>
+
 #if HAVE_DISPLAY
 #include "display.h"
 #endif
@@ -53,8 +55,27 @@ private:
 
 };
 
-
 MyFadinglight led_red(STATUS_LED, true, 20, STATUS_LED_INVERTED);
+
+#if HAVE_ENCODER
+#include <RotaryEncoder.h>
+RotaryEncoder *encoder1 = nullptr;
+
+#ifdef ESP32
+IRAM_ATTR
+#endif
+void checkPosition()
+{
+	encoder1->tick(); // just call tick() to check the state.
+}
+
+void encoderTask(void* pvParameters);
+#endif
+
+#if HAVE_BUTTON
+EventButton eb1(BUTTON_PIN);
+void buttonTask(void* pvParameters);
+#endif
 
 void uartTask(void* pvParameters);
 void consoleTask(void* pvParameters);
@@ -577,10 +598,19 @@ void setup()
     if (xTaskCreatePinnedToCore(webserverTask, "webserver", 4096, NULL, 1, NULL, 0))
         print_out_tbl(TSK_START_WEBSERVER);
 
+#if HAVE_ENCODER
+	if (xTaskCreate(encoderTask, "encoder", 4096, NULL, 1, NULL))
+		print_out("Encoder task");
+#endif
 
-    BSC5 bsc5(bsc5_BSC5ra_bsc5_start, bsc5_BSC5ra_bsc5_end);
-    bsc5.printHeader();
-    bsc5.printStar(0);
+#if HAVE_BUTTON
+	if (xTaskCreate(buttonTask, "button", 4096, NULL, 1, NULL))
+		print_out("Button task");
+#endif
+
+//	BSC5 bsc5(bsc5_BSC5ra_bsc5_start, bsc5_BSC5ra_bsc5_end);
+//    bsc5.printHeader();
+//    bsc5.printStar(0);
 
 }
 
@@ -643,3 +673,70 @@ void consoleTask(void* pvParameters)
         vTaskDelay(1);
     }
 }
+
+#if HAVE_ENCODER
+void encoderTask(void* pvParameters)
+{
+	encoder1 = new RotaryEncoder(ENCODER_A_PIN, ENCODER_B_PIN, RotaryEncoder::LatchMode::FOUR3);
+	attachInterrupt(digitalPinToInterrupt(ENCODER_A_PIN), checkPosition, CHANGE);
+	attachInterrupt(digitalPinToInterrupt(ENCODER_B_PIN), checkPosition, CHANGE);
+	long int encoder = encoder1->getPosition();
+
+	long int encoder_tmp;
+	for (;;)
+	{
+		encoder_tmp = encoder1->getPosition();
+		if (encoder != encoder_tmp)
+		{
+			encoder = encoder_tmp;
+//			print_out_nonl("encoder: %ld\n", encoder_tmp);
+//			uint64_t current_tracking_rate = TRACKING_SIDEREAL;
+			uint64_t new_tracking_rate = TRACKING_SIDEREAL + encoder;
+			if(ra_axis.trackingActive)
+			{
+				ra_axis.startTracking(new_tracking_rate, ra_axis.axisAbsoluteDirection);
+			}
+		}
+		vTaskDelay(1);
+	}
+}
+#endif
+
+#if HAVE_BUTTON
+void onEb1Clicked(EventButton& eb) {
+	print_out_nonl("eb1 clicked. Click count: %d\n", eb.clickCount());
+}
+void onEb1Pressed(EventButton& eb) {
+	print_out_nonl("eb1 Pressed. Click count: %d\n", eb.clickCount());
+}
+void onEb1Released(EventButton& eb) {
+	print_out_nonl("eb1 Released. Click count: %d\n", eb.clickCount());
+}
+void onEb1DoubleClicked(EventButton& eb) {
+	print_out_nonl("eb1 double clicked. Click count: %d\n", eb.clickCount());
+}
+void onEb1TripleClicked(EventButton& eb) {
+	print_out_nonl("eb1 triple clicked. Click count: %d\n", eb.clickCount());
+}
+void onEb1LongClicked(EventButton& eb) {
+	print_out_nonl("eb1 long clicked. Click count: %d\n", eb.clickCount());
+	encoder1->setPosition(0);
+}
+
+void buttonTask(void* pvParameters)
+{
+	eb1.setClickHandler(onEb1Clicked);
+	eb1.setPressedHandler(onEb1Pressed);
+	eb1.setReleasedHandler(onEb1Released);
+	eb1.setDoubleClickHandler(onEb1DoubleClicked);
+	eb1.setTripleClickHandler(onEb1TripleClicked);
+	eb1.setLongClickHandler(onEb1LongClicked);
+
+	for (;;)
+	{
+		eb1.update();
+		vTaskDelay(1);
+	}
+}
+#endif
+

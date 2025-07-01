@@ -54,15 +54,24 @@ enum trackingRateS
 //};
 
 #elif MOTOR_TRACKING_RATE == TRACKING_RATE_NATGEO
-//// gear ratio 475.2, 1.8deg motor, 16 msteps, f_cpu@240MHz
-#define STEPS_PER_SECOND_256MICROSTEP	350
+//// gear ratio 475.2, 1.8deg motor, 16 msteps, alarm freq@80MHz
+#define STEPS_PER_SECOND_256MICROSTEP	281.6
 #define TRACKER_MOTOR_MICROSTEPPING 16
 enum trackingRateS
 {
-    TRACKING_SIDEREAL = 3399779, // SIDEREAL (23h,56 min)
-    TRACKING_SOLAR = 3409091,    // SOLAR (24h)
-    TRACKING_LUNAR = 3482217,    // LUNAR (24h, 31 min)
+    TRACKING_SIDEREAL = 1133260, // SIDEREAL (23h,56 min)
+    TRACKING_SOLAR = 1136364,    // SOLAR (24h)
+    TRACKING_LUNAR = 1160739,    // LUNAR (24h, 31 min)
 };
+////// gear ratio 475.2, 1.8deg motor, 16 msteps, f_cpu@240MHz
+//#define STEPS_PER_SECOND_256MICROSTEP	281.6
+//#define TRACKER_MOTOR_MICROSTEPPING 16
+//enum trackingRateS
+//{
+//    TRACKING_SIDEREAL = 3399779, // SIDEREAL (23h,56 min)
+//    TRACKING_SOLAR = 3409091,    // SOLAR (24h)
+//    TRACKING_LUNAR = 3482217,    // LUNAR (24h, 31 min)
+//};
 // gear ratio 590,4, 1.8deg motor, 64 msteps, f_cpu@240MHz
 //#define STEPS_PER_SECOND_256MICROSTEP	350
 //#define TRACKER_MOTOR_MICROSTEPPING 64
