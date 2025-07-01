@@ -56,11 +56,11 @@ class Axis
     void setPosition(int64_t pos) { position = pos; }
     int64_t getPosition() { return position; }
 
+    HardwareTimer stepTimer;
   private:
     void setDirection(bool directionArg);
     void setMicrostep(uint16_t microstep);
 
-    HardwareTimer stepTimer;
     uint16_t microStep;
     uint8_t stepPin;
     uint8_t dirPin;

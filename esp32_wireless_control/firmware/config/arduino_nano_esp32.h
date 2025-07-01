@@ -3,8 +3,8 @@
 
 #include "pins_config.h"
 
-#undef RA_INVERT_DIR_PIN          // if need to invert direction pin set to 1
-#define RA_INVERT_DIR_PIN 1          // if need to invert direction pin set to 1
+//#undef RA_INVERT_DIR_PIN          // if need to invert direction pin set to 1
+//#define RA_INVERT_DIR_PIN 1          // if need to invert direction pin set to 1
 
 /*****DO NOT MODIFY BELOW*****/
 #define MOTOR_TRACKING_RATE	TRACKING_RATE_NATGEO

@@ -79,7 +79,9 @@ void IRAM_ATTR stepTimerRA_ISR()
             print_out("GotoTarget axisCountValue: %lld", ra_axis.getAxisCount());
             print_out("GotoTarget targetCount: %lld", ra_axis.getAxisTargetCount());
             ra_axis.goToTarget = false;
-            ra_axis.stopSlew();
+            ra_axis.slewActive = false;
+            ra_axis.stepTimer.stop();
+//            ra_axis.stopSlew();
         }
     }
 }
@@ -183,7 +185,7 @@ void Axis::stopTracking()
 
 void Axis::gotoTarget(uint64_t rate, const Position& current, const Position& target)
 {
-    setMicrostep(TRACKER_MOTOR_MICROSTEPPING);
+    setMicrostep(TRACKER_MOTOR_MICROSTEPPING/2);
     int64_t deltaArcseconds = target.arcseconds - current.arcseconds;
 //    int64_t stepsToMove = deltaArcseconds / ARCSEC_PER_STEP;
     // Value of 60 refers to resolution of second, if 256 microsteps used. 60 for 1.8deg stepper, 120 for 0.9
@@ -222,7 +224,7 @@ void Axis::startSlew(uint64_t rate, bool directionArg)
     stepTimer.stop();
     setDirection(directionArg);
     slewActive = true;
-    setMicrostep(TRACKER_MOTOR_MICROSTEPPING);
+    setMicrostep(TRACKER_MOTOR_MICROSTEPPING/2);
     slewTimeOut.start(12000, true);
     stepTimer.start(rate, true);
 }
