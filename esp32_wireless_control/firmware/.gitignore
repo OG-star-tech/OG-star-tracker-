@@ -6,3 +6,7 @@
 .vscode/ipch
 compile_commands.json
 wifi_config.h
+.idea
+.cproject
+.project
+.settings
