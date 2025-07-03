@@ -52,11 +52,11 @@ void IRAM_ATTR stepTimerRA_ISR()
     {
 		if(ra_axis.axisAbsoluteDirection ^ ra_axis.trackingDirection)
 		{
-			position += MAX_MICROSTEPS/(uStep ? uStep : 1);
+			position -= MAX_MICROSTEPS/(uStep ? uStep : 1);
 		}
 		else
 		{
-			position -= MAX_MICROSTEPS/(uStep ? uStep : 1);
+			position += MAX_MICROSTEPS/(uStep ? uStep : 1);
 		}
 		ra_axis.setPosition(position);
     }
@@ -66,11 +66,11 @@ void IRAM_ATTR stepTimerRA_ISR()
         int temp = ra_axis.getAxisCount();
         if(ra_axis.axisAbsoluteDirection ^ ra_axis.trackingDirection)
         {
-            temp++;
+            temp--;
         }
 		else
 		{
-			temp--;
+			temp++;
 		}
         ra_axis.setAxisCount(temp);
         if (ra_axis.goToTarget && ra_axis.getAxisCount() == ra_axis.getAxisTargetCount())
@@ -188,6 +188,25 @@ void Axis::gotoTarget(uint64_t rate, const Position& current, const Position& ta
 {
     setMicrostep(TRACKER_MOTOR_MICROSTEPPING/2);
     int64_t deltaArcseconds = target.arcseconds - current.arcseconds;
+
+    print_out_nonl("deltaArcseconds: %lld\n", deltaArcseconds);
+
+
+    if(abs(deltaArcseconds) > 86400/2)
+    {
+        print_out_nonl("abs(deltaArcseconds): %lld\n", abs(deltaArcseconds));
+    	if(deltaArcseconds > 0)
+    	{
+    		deltaArcseconds = (deltaArcseconds - 86400) % 86400;
+            print_out_nonl("(deltaArcseconds - 86400) %% 86400: %lld\n", deltaArcseconds);
+    	}
+    	else
+    	{
+    		deltaArcseconds = (deltaArcseconds + 86400) % 86400;
+            print_out_nonl("(deltaArcseconds + 86400) %% 86400: %lld\n", deltaArcseconds);
+    	}
+    }
+
 //    int64_t stepsToMove = deltaArcseconds / ARCSEC_PER_STEP;
     // Value of 60 refers to resolution of second, if 256 microsteps used. 60 for 1.8deg stepper, 120 for 0.9
 //    int64_t stepsToMove = (deltaArcseconds * 60) / (MAX_MICROSTEPS/(microStep ? microStep : 1));
@@ -195,7 +214,9 @@ void Axis::gotoTarget(uint64_t rate, const Position& current, const Position& ta
 //    int64_t stepsToMove = (deltaArcseconds * 277.3) / (MAX_MICROSTEPS/(microStep ? microStep : 1));
 
     int64_t stepsToMove = (deltaArcseconds * STEPS_PER_SECOND_256MICROSTEP) / (MAX_MICROSTEPS/(microStep ? microStep : 1));
-    bool direction = (stepsToMove > 0) ^ trackingDirection;
+    bool direction = (stepsToMove < 0) ^ trackingDirection;
+
+    print_out_nonl("stepsToMove: %lld\n", stepsToMove);
 
     setPosition(current.arcseconds*STEPS_PER_SECOND_256MICROSTEP);
     resetAxisCount();

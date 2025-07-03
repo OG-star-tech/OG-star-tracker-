@@ -59,7 +59,7 @@ enum trackingRateS
 #define TRACKER_MOTOR_MICROSTEPPING 16
 enum trackingRateS
 {
-    TRACKING_SIDEREAL = 1133260, // SIDEREAL (23h,56 min)
+    TRACKING_SIDEREAL = 1133234, // SIDEREAL (23h,56 min)
     TRACKING_SOLAR = 1136364,    // SOLAR (24h)
     TRACKING_LUNAR = 1160739,    // LUNAR (24h, 31 min)
 };

@@ -64,8 +64,12 @@ void Display::updateDisplay()
 
 	int64_t position = ra_axis.getPosition();
 	lcd.setCursor(0, 1);
-	int seconds = position/STEPS_PER_SECOND_256MICROSTEP;
-	int milisec = (1000/STEPS_PER_SECOND_256MICROSTEP) * (position - STEPS_PER_SECOND_256MICROSTEP*seconds);
+
+	int64_t position2 = position % ((int64_t)(24*60*60*STEPS_PER_SECOND_256MICROSTEP));
+	position2 = (position2 > 0) ? position2 : position2 + (24*60*60*STEPS_PER_SECOND_256MICROSTEP);
+
+	int seconds = position2/STEPS_PER_SECOND_256MICROSTEP;
+	int milisec = (1000/STEPS_PER_SECOND_256MICROSTEP) * (position2 - STEPS_PER_SECOND_256MICROSTEP*seconds);
 	int sec = seconds % 60;
 	int min = (seconds / 60) % 60;
 	int hour = seconds / 3600;
