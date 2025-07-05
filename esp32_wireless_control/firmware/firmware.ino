@@ -585,7 +585,7 @@ void setup()
     // start UART task before any usage of print_out
     if (xTaskCreate(uartTask, "uart", 4096, NULL, 1, NULL))
     {
-        // print_out_tbl(TSK_CLEAR_SCREEN);
+        print_out_tbl(TSK_CLEAR_SCREEN);
         print_out_tbl(TSK_START_UART);
     }
 
