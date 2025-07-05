@@ -472,9 +472,9 @@ void setupWireless()
     print_out("Starting mDNS responder");
     if (!MDNS.begin(MDNS_NAME))
     {
-		print_out("Error starting mDNS responder");
-		return;
-	}
+        print_out("Error starting mDNS responder");
+        return;
+    }
     print_out("mDNS responder started");
 
     MDNS.addService("http", "tcp", WEBSERVER_PORT);
@@ -483,14 +483,12 @@ void setupWireless()
 
     MDNS.addService("ogtracker", "tcp", WEBSERVER_PORT);
     MDNS.addServiceTxt("ogtracker", "tcp", "version", BUILD_VERSION);
-
 }
 
 void setup()
 {
     // Start the debug serial connection
     setup_uart(&Serial, 115200);
-
 
     if (xTaskCreate(uartTask, "uart", 4096, NULL, 1, NULL))
     {
