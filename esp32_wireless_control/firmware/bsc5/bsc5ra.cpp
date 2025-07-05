@@ -3,6 +3,8 @@
 
 #define ntohll(x) ((((uint64_t)ntohl(x))<<32) + (ntohl((x)>>32)))
 
+BSC5 bsc5(bsc5_BSC5ra_bsc5_start, bsc5_BSC5ra_bsc5_end);
+
 uint64_t
 ntoh64(const uint64_t *input)
 {

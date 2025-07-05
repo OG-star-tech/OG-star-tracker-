@@ -13,10 +13,10 @@
 
 extern Languages language;
 
+Display display(SDA_PIN, SCL_PIN);
+
 //#include "Adafruit_USB_RGB_Backpack.h"
 //Adafruit_USB_RGB_Backpack lcd(Serial1);
-
-Display display(SDA_PIN, SCL_PIN);
 
 #include <LiquidCrystal_I2C.h> // Use an up to date library version, which has the init method
 LiquidCrystal_I2C lcd(0x27, LCD_COLUMNS, LCD_ROWS);  // set the LCD address to 0x27 for a 16 chars and 2 line display
@@ -31,11 +31,14 @@ Display::Display(uint8_t sda_pin, uint8_t scl_pin) : _sda_pin(sda_pin), _scl_pin
 void Display::begin()
 {
 //	Serial1.end();
-//	Serial1.begin(19200, SERIAL_8N1, D5, D4);
+//	Serial1.begin(19200, SERIAL_8N1, X_STEP, Abort);
+////	Serial1.begin(19200, SERIAL_8N1, X_STEP, Z_STEP);
 //	while(!Serial1);
+//
 //    lcd.begin(LCD_COLUMNS, LCD_ROWS);
 //    lcd.clear();
 //    lcd.setBacklightRGBColor(255, 0, 0);
+//    lcd.setContrast(219);
 
 
 	Wire.end();
@@ -178,8 +181,8 @@ void Display::displayTask(void* pvParameters)
 	Display *disp = (Display *) pvParameters;
     for (;;)
     {
-        disp->updateDisplay();
         vTaskDelay(500 * portTICK_PERIOD_MS);
+        disp->updateDisplay();
     }
 }
 

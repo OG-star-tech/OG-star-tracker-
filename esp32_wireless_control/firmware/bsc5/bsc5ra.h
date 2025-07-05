@@ -52,4 +52,6 @@ private:
 	const uint8_t *_end;
 };
 
+extern BSC5 bsc5;
+
 #endif /* _BSC5RA_H_ */

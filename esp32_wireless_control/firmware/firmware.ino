@@ -26,6 +26,7 @@
 #endif
 
 #include "bsc5/bsc5ra.h"
+#include "bsc5/bsc5_notes.h"
 
 SerialTerminal term(CLI_NEWLINE_CHAR, CLI_DELIMITER_CHAR);
 WebServer server(WEBSERVER_PORT);
@@ -613,10 +614,12 @@ void setup()
 		print_out("Button task");
 #endif
 
-//	BSC5 bsc5(bsc5_BSC5ra_bsc5_start, bsc5_BSC5ra_bsc5_end);
 //    bsc5.printHeader();
 //    bsc5.printStar(0);
-
+//    std::list<Note> notes = bsc5_notes.search("polaris");
+//    for(auto note : notes) {
+//    	print_out_nonl("note: %d %s\n", note.id, note.description.c_str());
+//    }
 }
 
 void loop()

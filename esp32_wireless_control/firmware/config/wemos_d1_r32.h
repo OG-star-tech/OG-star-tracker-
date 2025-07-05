@@ -33,12 +33,12 @@
 
 #define EN12_n MotorEnable
 
-#define HAVE_DISPLAY 0
+#define HAVE_DISPLAY 1
 // LCD Display settings
-#define LCD_COLUMNS 16
-#define LCD_ROWS	2
-//#define LCD_COLUMNS 20
-//#define LCD_ROWS	4
+//#define LCD_COLUMNS 16
+//#define LCD_ROWS	2
+#define LCD_COLUMNS 20
+#define LCD_ROWS	4
 #define SDA_PIN		32
 #define SCL_PIN		33
 
