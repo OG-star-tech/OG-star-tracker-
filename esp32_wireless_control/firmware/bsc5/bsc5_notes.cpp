@@ -4,6 +4,17 @@
 
 BSC5Notes bsc5_notes(bsc5_ybsc5_notes_start, bsc5_ybsc5_notes_end);
 
+JsonObject Note::toJson(JsonVariant parent)
+{
+	JsonDocument jsonNote;
+	jsonNote["id"] = id;
+	jsonNote["description"] = description;
+
+	parent.add(jsonNote.as<JsonObject>());
+	return jsonNote.as<JsonObject>();
+}
+
+
 BSC5Notes::BSC5Notes(const uint8_t *start, const uint8_t *end):
 	_start(start), _end(end)
 {

@@ -23,10 +23,62 @@ ntoh64(const uint64_t *input)
     return rval;
 }
 
+//Entry Entry::newFromIndex(int32_t index)
+//{
+//
+//}
+
 BSC5::BSC5(const uint8_t *start, const uint8_t *end):
 	_start(start), _end(end)
 {
 
+}
+
+std::optional<Entry> BSC5::findByXno(float xno)
+{
+	bsc5_entry_t _entry;
+	bsc5_entry_t *entry = &_entry;
+	const uint8_t* i = 0;
+	char is[3] = {0};
+
+	print_out("Catalog number of star to search: %.0f", xno);
+
+	for(i = _start+sizeof(bsc5_header_t); i < _end; i += sizeof(bsc5_entry_t))
+	{
+//		bcopy(_start+sizeof(bsc5_header_t)+i*sizeof(bsc5_entry_t), &_entry, sizeof(bsc5_entry_t));
+
+		bcopy(i, &_entry, sizeof(bsc5_entry_t));
+
+		entry->_xno = ntohl(entry->_xno);
+
+//		print_out("Search for: %.0f; current: %.0f", xno, entry->xno);
+
+		if(entry->xno == xno)
+		{
+			entry->_sra0 = ntoh64(&entry->_sra0);
+			entry->_sdec0 = ntoh64(&entry->_sdec0);
+			entry->mag = ntohs(entry->mag);
+			entry->_xrpm = ntohl(entry->_xrpm);
+			entry->_xdpm = ntohl(entry->_xdpm);
+
+			is[0] = entry->is[0];
+			is[1] = entry->is[1];
+
+			return Entry(entry->xno, entry->sra0, entry->sdec0, is, entry->mag, entry->xrpm, entry->xdpm);
+		}
+	}
+	return {};
+}
+
+void Entry::print()
+{
+	print_out("Catalog number of star: %.0f", this->xno);
+	print_out("B1950 Right Ascension (radians): %.20f", this->sra0);
+	print_out("B1950 Declination (radians): %.20f", this->sdec0);
+	print_out("Spectral type (2 characters): %s", this->is);
+	print_out("V Magnitude * 100: %d", this->mag);
+	print_out("R.A. proper motion (radians per year): %.20f", this->xrpm);
+	print_out("Dec. proper motion (radians per year): %.20f", this->xdpm);
 }
 
 void BSC5::printHeader()

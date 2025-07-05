@@ -2,6 +2,8 @@
 #define _BSC5RA_H_ 1
 
 #include <stdint.h>
+#include <WString.h>
+#include <optional>
 
 typedef struct bsc5_header {
     int32_t star0;
@@ -41,11 +43,29 @@ typedef struct bsc5_entry {
 extern const uint8_t bsc5_BSC5ra_bsc5_start[] asm("_binary_bsc5_BSC5ra_bsc5_start");
 extern const uint8_t bsc5_BSC5ra_bsc5_end[] asm("_binary_bsc5_BSC5ra_bsc5_end");
 
+class Entry {
+public:
+	Entry(float xno, double sra0, double sdec0, char is[2], uint16_t mag, float xrpm, float xdpm):
+		xno(xno), sra0(sra0), sdec0(sdec0), is(is), mag(mag), xrpm(xrpm), xdpm(xdpm)
+	{
+	}
+	float xno;
+	double sra0;
+	double sdec0;
+	String is;
+	uint16_t mag;
+	float xrpm;
+	float xdpm;
+//	static Entry newFromIndex(int32_t index);
+	void print();
+};
+
 class BSC5 {
 public:
 	BSC5(const uint8_t *start, const uint8_t *end);
 	void printHeader();
 	void printStar(int32_t index);
+	std::optional<Entry> findByXno(float xno);
 
 private:
 	const uint8_t *_start;

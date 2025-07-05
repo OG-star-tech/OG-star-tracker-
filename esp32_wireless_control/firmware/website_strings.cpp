@@ -22,4 +22,5 @@ const char* FOCAL_LENGTH = "focalLength";
 const char* PIXEL_SIZE = "pixelSize";
 const char* MIME_TYPE_TEXT = "text/plain";
 const char* MIME_TYPE_HTML = "text/html";
+const char* MIME_APPLICATION_JSON = "application/json";
 const char* GOTO_RA = "gotoRA";

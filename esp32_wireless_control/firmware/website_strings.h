@@ -24,6 +24,7 @@ extern const char* PIXEL_SIZE;
 extern const char* DISABLE_TRACKING_ON_FINISH;
 extern const char* MIME_TYPE_TEXT;
 extern const char* MIME_TYPE_HTML;
+extern const char* MIME_APPLICATION_JSON;
 extern const char* GOTO_RA;
 
 #endif // STRINGS_H

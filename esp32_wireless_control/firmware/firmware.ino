@@ -383,7 +383,7 @@ void handleGetPresetExposureSettings()
     settings[FOCAL_LENGTH] = intervalometer.currentSettings.focalLength;
     serializeJson(settings, json);
     // print_out(json);
-    server.send(200, "application/json", json);
+    server.send(200, MIME_APPLICATION_JSON, json);
 }
 
 void handleAbortCapture()
@@ -473,6 +473,35 @@ void handleVersion()
     server.send(200, MIME_TYPE_TEXT, (String) INTERNAL_VERSION);
 }
 
+void handleSearch()
+{
+    String query = server.arg("q");
+    String json;
+    JsonDocument results;
+
+    std::list<Note> notes = bsc5_notes.search(query);
+    for(auto note : notes) {
+//    	print_out_nonl("note: %d %s\n", note.id, note.description.c_str());
+//    	results.add(note.toJson(results));
+
+    	std::optional<Entry> entry = bsc5.findByXno(note.id);
+    	if(entry.has_value())
+    	{
+    		print_out_nonl("Description: %s\n", note.description.c_str());
+    		entry.value().print();
+    	}
+    	note.toJson(results);
+
+//    	JsonObject jsonNote = results.add<JsonObject>();
+//    	jsonNote["id"] = note.id;
+//    	jsonNote["description"] = note.description;
+    }
+    serializeJson(results, json);
+    // print_out(json);
+
+    server.send(200, MIME_APPLICATION_JSON, json);
+}
+
 void setupWireless()
 {
 #ifdef AP_MODE
@@ -520,6 +549,8 @@ void setupWireless()
     server.on("/abort-goto-ra", HTTP_GET, handleAbortGoToRA);
     server.on("/version", HTTP_GET, handleVersion);
     server.on("/setlang", HTTP_GET, handleSetLanguage);
+
+    server.on("/search", HTTP_GET, handleSearch);
 
     // Start the server
     server.begin();

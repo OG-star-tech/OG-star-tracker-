@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <WString.h>
 #include <list>
+#include <ArduinoJson.h>
 
 extern const uint8_t bsc5_ybsc5_notes_start[] asm("_binary_bsc5_ybsc5_notes_start");
 extern const uint8_t bsc5_ybsc5_notes_end[] asm("_binary_bsc5_ybsc5_notes_end");
@@ -12,6 +13,8 @@ class Note {
 public:
 	Note(const uint16_t id, const String description):
 		id(id), description(description) {}
+
+	JsonObject toJson(JsonVariant parent);
 
 	uint16_t id;
 	String description;
