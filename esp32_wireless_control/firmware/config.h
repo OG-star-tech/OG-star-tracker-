@@ -38,7 +38,7 @@
 #endif
 // If you are using AP mode, you can access the website using the below URL
 #ifndef MDNS_NAME
-#define MDNS_NAME "ogtracker"
+#define MDNS_NAME "tracker"
 #endif
 #ifndef WEBSERVER_PORT
 #define WEBSERVER_PORT 80
