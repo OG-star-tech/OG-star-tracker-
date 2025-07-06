@@ -630,23 +630,6 @@ void setup()
         print_out_tbl(TSK_START_INTERVALOMETER);
     if (xTaskCreatePinnedToCore(webserverTask, "webserver", 4096, NULL, 1, NULL, 0))
         print_out_tbl(TSK_START_WEBSERVER);
-
-#if HAVE_ENCODER
-	if (xTaskCreate(encoderTask, "encoder", 4096, NULL, 1, NULL))
-		print_out("Encoder task");
-#endif
-
-#if HAVE_BUTTON
-	if (xTaskCreate(buttonTask, "button", 4096, NULL, 1, NULL))
-		print_out("Button task");
-#endif
-
-//    bsc5.printHeader();
-//    bsc5.printStar(0);
-//    std::list<Note> notes = bsc5_notes.search("polaris");
-//    for(auto note : notes) {
-//    	print_out_nonl("note: %d %s\n", note.id, note.description.c_str());
-//    }
 }
 
 void loop()
