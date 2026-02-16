@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>%STR_TITLE%</title>
+    <title>Loading...</title>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <style>
@@ -434,6 +434,8 @@
 
         function applyLanguageStrings() {
             if (!langStrings.strings) return;
+
+            document.title = langStrings.strings['%STR_TITLE%']
 
             function replaceInNode(node) {
                 if (node.nodeType === Node.TEXT_NODE) {
@@ -1335,7 +1337,7 @@
             const hours = now.getHours().toString().padStart(2, '0');
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const seconds = now.getSeconds().toString().padStart(2, '0');
-            document.getElementById('local-time').textContent = `%STR_LOCAL_TIME% (${tz}): ${hours}h${minutes}min${seconds}s`;
+            document.getElementById('local-time').textContent = ` (${tz}): ${hours}h${minutes}min${seconds}s`;
         }
 
         window.addEventListener('DOMContentLoaded', function () {
@@ -1774,7 +1776,7 @@
         <div class="status-info">
             <h4 id='firmware'><a href="/ota" class="firmware-link"
                     title="Click to update firmware">%STR_FIRMWARE_VERSION%: </a></h4>
-            <h4 id='local-time'>%STR_LOCAL_TIME%: </h4>
+            <h4><span>%STR_LOCAL_TIME%</span><span id='local-time'></span></h4>
         </div>
     </div>
 </body>
