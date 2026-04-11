@@ -93,9 +93,14 @@
 #define ARCSEC_PER_STEP 4.0
 #endif
 
+// PWM for general purpose status led
+#define LEDC_FREQ 1000  // 1kHz frequency
+#define LEDC_RESOLUTION 8
+
 // LEDs for intervalometer status and general purpose status led
 #define INTERV_PIN 25
 #define STATUS_LED 26 // (Red)
+#define STATUS_LED_BRIGHTNESS 5
 #define LANG_EEPROM_ADDR 0
 #define PRESETS_EEPROM_START_LOCATION 1
 // Start after intervalometer presets (10 * 28 bytes)
