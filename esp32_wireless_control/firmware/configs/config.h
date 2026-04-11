@@ -94,7 +94,7 @@
 #endif
 
 // PWM for general purpose status led
-#define LEDC_FREQ 1000  // 1kHz frequency
+#define LEDC_FREQ 1000 // 1kHz frequency
 #define LEDC_RESOLUTION 8
 
 // LEDs for intervalometer status and general purpose status led
