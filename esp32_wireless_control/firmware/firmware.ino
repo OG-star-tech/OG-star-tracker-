@@ -284,6 +284,7 @@ void setup()
     else
         language = static_cast<Languages>(langNum);
 
+    delay(1000);
     // Initialize the pins
     bool result = ledcAttach(STATUS_LED, LEDC_FREQ, LEDC_RESOLUTION);
     if (!result)
