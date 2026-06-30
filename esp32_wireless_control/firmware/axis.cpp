@@ -139,7 +139,8 @@ void Axis::begin()
 
 void Axis::startTracking(uint64_t rateArg, bool directionArg)
 {
-    if (!motorActive){
+    if (!motorActive)
+    {
         enableMotorPower();
     }
     startRequested = false;
@@ -300,7 +301,8 @@ bool Axis::stopPanByDegrees()
 
 void Axis::startSlew(uint64_t rate, bool directionArg)
 {
-    if (!motorActive){
+    if (!motorActive)
+    {
         enableMotorPower();
     }
     stepTimer.stop();

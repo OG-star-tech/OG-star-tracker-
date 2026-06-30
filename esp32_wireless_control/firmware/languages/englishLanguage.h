@@ -68,8 +68,8 @@ const char* const englishLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "Sidereal",                      // STR_SIDEREAL
     "Solar",                         // STR_SOLAR
     "Lunar",                         // STR_LUNAR
-    "Enable",                      // STR_BTN_MOTOR_ON
-    "Disable",                     // STR_BTN_MOTOR_OFF
+    "Enable",                        // STR_BTN_MOTOR_ON
+    "Disable",                       // STR_BTN_MOTOR_OFF
     "ON",                            // STR_BTN_ON
     "OFF",                           // STR_BTN_OFF
     "Slew Control",                  // STR_SLEW_CONTROL

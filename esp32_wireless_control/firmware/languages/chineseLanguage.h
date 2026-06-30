@@ -68,7 +68,7 @@ const char* const chineseLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "太阳速率",                                                           // STR_SOLAR
     "月球速率",                                                           // STR_LUNAR
     "电机开启",                                                           // STR_BTN_MOTOR_ON
-    "电机关闭",                                                          // STR_BTN_MOTOR_OFF
+    "电机关闭",                                                           // STR_BTN_MOTOR_OFF
     "开启",                                                               // STR_BTN_ON
     "关闭",                                                               // STR_BTN_OFF
     "快速调",                                                             // STR_SLEW_CONTROL

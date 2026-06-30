@@ -108,7 +108,7 @@ class Axis
     void print_status();
 
     void enableMotorPower();
-    
+
     void disableMotorPower();
 
   private:

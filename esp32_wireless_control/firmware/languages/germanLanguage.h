@@ -67,7 +67,7 @@ const char* const germanLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "Sidereal",                                     // STR_SIDEREAL
     "Solar",                                        // STR_SOLAR
     "Lunar",                                        // STR_LUNAR
-    "Aktivieren",                                    // STR_BTN_MOTOR_ON
+    "Aktivieren",                                   // STR_BTN_MOTOR_ON
     "Deaktivieren",                                 // STR_BTN_MOTOR_OFF
     "EIN",                                          // STR_BTN_ON
     "AUS",                                          // STR_BTN_OFF

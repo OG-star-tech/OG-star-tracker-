@@ -622,10 +622,14 @@ void ApiHandler::handleStatusRequest()
         if (intervalometer->getErrorMessage() == ErrorMessage::ERR_MSG_NONE)
             if (ra_axis.motorActive)
             {
-                String status = String(languageMessageStrings[language][MSG_IDLE]) + " - " + String(languageMessageStrings[language][MSG_MOTOR_ON]);
+                String status = String(languageMessageStrings[language][MSG_IDLE]) + " - " +
+                                String(languageMessageStrings[language][MSG_MOTOR_ON]);
                 _server->send(200, MIME_TYPE_TEXT, status);
-            }else{
-                String status = String(languageMessageStrings[language][MSG_IDLE]) + " - " + String(languageMessageStrings[language][MSG_MOTOR_OFF]);
+            }
+            else
+            {
+                String status = String(languageMessageStrings[language][MSG_IDLE]) + " - " +
+                                String(languageMessageStrings[language][MSG_MOTOR_OFF]);
                 _server->send(200, MIME_TYPE_TEXT, status);
             }
         else
