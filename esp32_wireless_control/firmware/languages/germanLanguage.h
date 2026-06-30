@@ -12,6 +12,8 @@ const char* const germanLangLanguageNames[LANG_COUNT] PROGMEM = {
 
 const char* const germanLangMessageStrings[NUMBER_OF_MESSAGES] PROGMEM = {
     // MESSAGE STRINGS
+    "Aktivieren",                                        // MSG_MOTOR_ON
+    "Deaktivieren",                                      // MSG_MOTOR_OFF
     "Verfolgung Ein",                                   // MSG_TRACKING_ON
     "Verfolgung Aus",                                   // MSG_TRACKING_OFF
     "Schwenken",                                        // MSG_SLEWING
@@ -65,6 +67,8 @@ const char* const germanLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "Sidereal",                                     // STR_SIDEREAL
     "Solar",                                        // STR_SOLAR
     "Lunar",                                        // STR_LUNAR
+    "Motor ein",                                    // STR_BTN_MOTOR_ON
+    "Motor aus",                     // STR_BTN_MOTOR_OFF
     "EIN",                                          // STR_BTN_ON
     "AUS",                                          // STR_BTN_OFF
     "Schwenksteuerung",                             // STR_SLEW_CONTROL
@@ -76,6 +80,7 @@ const char* const germanLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "nach Rechts schwenken",                        // STR_SLEW_RIGHT
     "Abbrechen",                                    // STR_ABORT_SLEW
     "INTERVALLAUSLÖSER",                            // STR_INTERVALOMETER
+    "Motorsteuerung",                               // STR_MOTOR_CONTROL
     "Voreinstellung",                               // STR_PRESET
     "VOREINSTELLUNG SPEICHERN",                     // STR_SAVE_PRESET
     "VOREINSTELLUNG LADEN",                         // STR_LOAD_PRESET

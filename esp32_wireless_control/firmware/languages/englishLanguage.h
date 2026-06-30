@@ -13,6 +13,8 @@ const char* const englishLangLanguageNames[LANG_COUNT] PROGMEM = {
 
 const char* const englishLangMessageStrings[NUMBER_OF_MESSAGES] PROGMEM = {
     // MESSAGE STRINGS
+    "Enable",                                   // MSG_MOTOR_ON
+    "Disable",                                  // MSG_MOTOR_OFF
     "Tracking On",                                // MSG_TRACKING_ON
     "Tracking Off",                               // MSG_TRACKING_OFF
     "Slewing",                                    // MSG_SLEWING
@@ -66,6 +68,8 @@ const char* const englishLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "Sidereal",                      // STR_SIDEREAL
     "Solar",                         // STR_SOLAR
     "Lunar",                         // STR_LUNAR
+    "Motor on",                      // STR_BTN_MOTOR_ON
+    "Motor off",                     // STR_BTN_MOTOR_OFF
     "ON",                            // STR_BTN_ON
     "OFF",                           // STR_BTN_OFF
     "Slew Control",                  // STR_SLEW_CONTROL
@@ -77,6 +81,7 @@ const char* const englishLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "Slew Right",                    // STR_SLEW_RIGHT
     "Abort Slew",                    // STR_ABORT_SLEW
     "INTERVALOMETER",                // STR_INTERVALOMETER
+    "Motor Control",                 // STR_MOTOR_CONTROL
     "Preset",                        // STR_PRESET
     "SAVE PRESET",                   // STR_SAVE_PRESET
     "LOAD PRESET",                   // STR_LOAD_PRESET

@@ -74,7 +74,9 @@ void ApiHandler::registerEndpoints()
 
     // Web interface
     _server->on("/", HTTP_GET, [api]() { api->handleRoot(); });
-
+    // Motor control
+    _server->on("/motorOff", HTTP_GET, [api]() { api->handleMotorOff(); });
+    _server->on("/motorOn", HTTP_GET, [api]() { api->handleMotorOn(); });
     // Tracking control
     _server->on("/on", HTTP_GET, [api]() { api->handleOn(); });
     _server->on("/off", HTTP_GET, [api]() { api->handleOff(); });
@@ -175,6 +177,28 @@ void ApiHandler::handleOff()
 {
     ra_axis.stopTracking();
     _server->send(200, MIME_TYPE_TEXT, languageMessageStrings[language][MSG_TRACKING_OFF]);
+}
+
+void ApiHandler::handleMotorOff()
+{
+    // Stop all axis activity before disabling driver power.
+    ra_axis.stopTracking();
+    if (ra_axis.slewActive)
+    {
+        if (ra_axis.goToTarget)
+            ra_axis.stopGotoTarget();
+        else
+            ra_axis.stopSlew();
+    }
+
+    ra_axis.disableMotorPower();
+    _server->send(200, MIME_TYPE_TEXT, languageMessageStrings[language][MSG_MOTOR_OFF]);
+}
+
+void ApiHandler::handleMotorOn()
+{
+    ra_axis.enableMotorPower();
+    _server->send(200, MIME_TYPE_TEXT, languageMessageStrings[language][MSG_MOTOR_ON]);
 }
 
 void ApiHandler::handleSlewRequest()
@@ -596,7 +620,14 @@ void ApiHandler::handleStatusRequest()
     else
     {
         if (intervalometer->getErrorMessage() == ErrorMessage::ERR_MSG_NONE)
-            _server->send(200, MIME_TYPE_TEXT, languageMessageStrings[language][MSG_IDLE]);
+            if (ra_axis.motorActive)
+            {
+                String status = String(languageMessageStrings[language][MSG_IDLE]) + " - " + String(languageMessageStrings[language][MSG_MOTOR_ON]);
+                _server->send(200, MIME_TYPE_TEXT, status);
+            }else{
+                String status = String(languageMessageStrings[language][MSG_IDLE]) + " - " + String(languageMessageStrings[language][MSG_MOTOR_OFF]);
+                _server->send(200, MIME_TYPE_TEXT, status);
+            }
         else
             _server->send(200, MIME_TYPE_TEXT,
                           languageErrorMessageStrings[language][intervalometer->getErrorMessage()]);

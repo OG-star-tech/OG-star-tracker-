@@ -64,6 +64,7 @@ class Axis
     volatile bool goToTarget;
     bool slewActive;
     bool trackingActive;
+    bool motorActive;
 
     Direction direction;
 
@@ -105,6 +106,10 @@ class Axis
     void begin();
 
     void print_status();
+
+    void enableMotorPower();
+    
+    void disableMotorPower();
 
   private:
     void setDirection(bool directionArg);
