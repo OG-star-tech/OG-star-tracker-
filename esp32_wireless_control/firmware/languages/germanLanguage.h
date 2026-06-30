@@ -12,8 +12,8 @@ const char* const germanLangLanguageNames[LANG_COUNT] PROGMEM = {
 
 const char* const germanLangMessageStrings[NUMBER_OF_MESSAGES] PROGMEM = {
     // MESSAGE STRINGS
-    "Aktivieren",                                        // MSG_MOTOR_ON
-    "Deaktivieren",                                      // MSG_MOTOR_OFF
+    "Motor Ein",                                        // MSG_MOTOR_ON
+    "Motor Aus",                                        // MSG_MOTOR_OFF
     "Verfolgung Ein",                                   // MSG_TRACKING_ON
     "Verfolgung Aus",                                   // MSG_TRACKING_OFF
     "Schwenken",                                        // MSG_SLEWING
@@ -58,7 +58,7 @@ const char* const germanLangErrorMessageStrings[NUMBER_OF_ERROR_MESSAGES] PROGME
 const char* const germanLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     // HTML STRINGS
     "OG Star Tracker Steuerungspanel",              // STR_TITLE
-    "TRACKER STEUERUNG",                            // STR_TRACKER_CONTOLLER
+    "TRACKER STEUERUNG",                            // STR_TRACKER_CONTROLLER
     "Verfolgung",                                   // STR_TRACKING
     "Hemisphäre",                                   // STR_HEMISPHERE
     "Nord",                                         // STR_NORTH
@@ -67,8 +67,8 @@ const char* const germanLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "Sidereal",                                     // STR_SIDEREAL
     "Solar",                                        // STR_SOLAR
     "Lunar",                                        // STR_LUNAR
-    "Motor ein",                                    // STR_BTN_MOTOR_ON
-    "Motor aus",                     // STR_BTN_MOTOR_OFF
+    "Aktivieren",                                    // STR_BTN_MOTOR_ON
+    "Deaktivieren",                                 // STR_BTN_MOTOR_OFF
     "EIN",                                          // STR_BTN_ON
     "AUS",                                          // STR_BTN_OFF
     "Schwenksteuerung",                             // STR_SLEW_CONTROL

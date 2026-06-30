@@ -12,8 +12,8 @@ const char* const chineseLangLanguageNames[LANG_COUNT] PROGMEM = {
 
 const char* const chineseLangMessageStrings[NUMBER_OF_MESSAGES] PROGMEM = {
     // MESSAGE STRINSS
-    "使能够",                                   // MSG_MOTOR_ON
-    "禁用",                                   // MSG_MOTOR_OFF
+    "电机开启",                                   // MSG_MOTOR_ON
+    "电机关闭",                                   // MSG_MOTOR_OFF
     "追踪开启",                                   // MSG_TRACKING_ON
     "追踪关闭",                                   // MSG_TRACKING_OFF
     "快速调整中",                                 // STR_SLEWING
