@@ -1,7 +1,7 @@
 #ifndef WEB_LANGUAGES_H
 #define WEB_LANGUAGES_H
 
-#define numberOfHTMLStrings 87
+#define numberOfHTMLStrings 90
 
 #include "error.h"
 
@@ -16,6 +16,8 @@ enum Languages
 
 enum Messages
 {
+    MSG_MOTOR_ON,
+    MSG_MOTOR_OFF,
     MSG_TRACKING_ON,
     MSG_TRACKING_OFF,
     MSG_SLEWING,

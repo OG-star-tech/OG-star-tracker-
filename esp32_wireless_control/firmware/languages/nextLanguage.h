@@ -15,6 +15,8 @@ const char* const nextLanguageStrings[LANG_COUNT] PROGMEM = {
 
 const char* const nextLangMessageStrings[NUMBER_OF_MESSAGES] PROGMEM = {
     // MESSAGE STRINSS
+    "", // MSG_MOTOR_ON
+    "", // MSG_MOTOR_OFF
     "", // MSG_TRACKING_ON
     "", // MSG_TRACKING_OFF
     "", // MSG_SLEWING
@@ -79,6 +81,7 @@ const char* const nextLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "", // STR_SLEW_RIGHT
     "", // STR_ABORT_SLEW
     "", // STR_INTERVALOMETER
+    "", // STR_MOTOR_CONTROL
     "", // STR_PRESET
     "", // STR_SAVE_PRESET
     "", // STR_LOAD_PRESET
