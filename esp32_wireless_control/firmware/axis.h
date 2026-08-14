@@ -64,6 +64,7 @@ class Axis
     volatile bool goToTarget;
     bool slewActive;
     bool trackingActive;
+    bool motorActive;
 
     Direction direction;
 
@@ -105,6 +106,10 @@ class Axis
     void begin();
 
     void print_status();
+
+    void enableMotorPower();
+
+    void disableMotorPower();
 
     // Runtime override for a reversed motor wiring/direction pin (persisted separately
     // in EEPROM). Takes effect the next time tracking/slewing/goto is (re)started.

@@ -37,6 +37,20 @@ class ApiHandler
      */
     void handleOff();
 
+    /**
+     * @endpoint GET /motorOff
+     * @brief Disable motor driver output power
+     * @response 200 OK with message "Motor OFF"
+     */
+    void handleMotorOff();
+
+    /**
+     * @endpoint GET /motorOn
+     * @brief Enable motor driver output power
+     * @response 200 OK with message "Motor ON"
+     */
+    void handleMotorOn();
+
     // ==================== SLEWING CONTROL ====================
 
     /**

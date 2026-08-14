@@ -139,6 +139,10 @@ void Axis::begin()
 
 void Axis::startTracking(uint64_t rateArg, bool directionArg)
 {
+    if (!motorActive)
+    {
+        enableMotorPower();
+    }
     startRequested = false;
     rate.tracking = rateArg;
     direction.tracking = directionArg;
@@ -297,6 +301,10 @@ bool Axis::stopPanByDegrees()
 
 void Axis::startSlew(uint64_t rate, bool directionArg)
 {
+    if (!motorActive)
+    {
+        enableMotorPower();
+    }
     stepTimer.stop();
     setDirection(directionArg);
     slewActive = true;
@@ -359,4 +367,16 @@ void Axis::setMicrostep(uint16_t microstep)
 void Axis::print_status()
 {
     driver->print_status();
+}
+
+void Axis::enableMotorPower()
+{
+    digitalWrite(EN12_n, LOW);
+    motorActive = true;
+}
+
+void Axis::disableMotorPower()
+{
+    digitalWrite(EN12_n, HIGH);
+    motorActive = false;
 }

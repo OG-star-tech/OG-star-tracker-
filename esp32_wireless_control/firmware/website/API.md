@@ -27,6 +27,7 @@ The OG Star Tracker provides a REST API over HTTP for remote control and monitor
 ### Enable Tracking
 **Endpoint:** `GET /on`  
 **Description:** Enable sidereal tracking at specified rate and direction
+This endpoint automatically enables motor driver power before movement.
 
 **Parameters:**
 | Parameter | Type | Required | Description |
@@ -51,6 +52,26 @@ GET http://192.168.4.1/on?direction=0&trackingSpeed=15956
 GET http://192.168.4.1/off
 ```
 
+### Motor Off
+**Endpoint:** `GET /motorOff`  
+**Description:** Cut power to the stepper motor driver output stage (de-energize motor coils)  
+**Response:** `200 OK` - "Motor OFF"
+
+**Example:**
+```
+GET http://192.168.4.1/motorOff
+```
+
+### Motor On
+**Endpoint:** `GET /motorOn`  
+**Description:** Re-enable power to the stepper motor driver output stage  
+**Response:** `200 OK` - "Motor ON"
+
+**Example:**
+```
+GET http://192.168.4.1/motorOn
+```
+
 ---
 
 ## Slewing Control
@@ -58,6 +79,7 @@ GET http://192.168.4.1/off
 ### Start Slewing
 **Endpoint:** `GET /startslew`  
 **Description:** Start manual slewing at specified speed  
+This endpoint automatically enables motor driver power before movement.
 
 **Parameters:**
 | Parameter | Type | Required | Description |

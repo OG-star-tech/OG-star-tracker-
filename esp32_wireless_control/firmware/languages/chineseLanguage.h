@@ -12,6 +12,8 @@ const char* const chineseLangLanguageNames[LANG_COUNT] PROGMEM = {
 
 const char* const chineseLangMessageStrings[NUMBER_OF_MESSAGES] PROGMEM = {
     // MESSAGE STRINSS
+    "电机开启",                                   // MSG_MOTOR_ON
+    "电机关闭",                                   // MSG_MOTOR_OFF
     "追踪开启",                                   // MSG_TRACKING_ON
     "追踪关闭",                                   // MSG_TRACKING_OFF
     "快速调整中",                                 // STR_SLEWING
@@ -65,6 +67,8 @@ const char* const chineseLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "恒星速率",                                                           // STR_SIDEREAL
     "太阳速率",                                                           // STR_SOLAR
     "月球速率",                                                           // STR_LUNAR
+    "电机开启",                                                           // STR_BTN_MOTOR_ON
+    "电机关闭",                                                           // STR_BTN_MOTOR_OFF
     "开启",                                                               // STR_BTN_ON
     "关闭",                                                               // STR_BTN_OFF
     "快速调",                                                             // STR_SLEW_CONTROL
@@ -76,6 +80,7 @@ const char* const chineseLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "向右调整",                                                           // STR_SLEW_RIGHT
     "停止调整",                                                           // STR_ABORT_SLEW
     "间隔拍摄",                                                           // STR_INTERVALOMETER
+    "电机控制",                                                           // STR_MOTOR_CONTROL
     "预设",                                                               // STR_PRESET
     "保存预设",                                                           // STR_SAVE_PRESET
     "加载预设",                                                           // STR_LOAD_PRESET

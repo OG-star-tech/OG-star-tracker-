@@ -521,6 +521,14 @@
             xhr.send();
         }
 
+        function sendMotorOffRequest() {
+            sendRequest('/motorOff');
+        }
+
+        function sendMotorOnRequest() {
+            sendRequest('/motorOn');
+        }
+
         setInterval(function () {
             sendRequest('/status');
         }, 500);
@@ -1523,7 +1531,6 @@
                 <button class="left-separator" type="button" onclick="sendRequest('/off')">%STR_BTN_OFF%</button>
             </div>
         </div>
-
         <div class="card">
             <h2>%STR_SLEW_CONTROL%</h2>
             <div class="grid">
@@ -1791,6 +1798,13 @@
                     <h3 id='captureTime'>%STR_CAPTURE_TIME%: 0 h, 0 m, 0
                         s</h3>
                 </div>
+            </div>
+        </div>
+        <div class="card">
+            <h2>%STR_MOTOR_CONTROL%</h2>
+            <div class="button-group">
+                <button class="right-separator" type="button" onclick="sendMotorOnRequest('/motorOn')">%STR_BTN_MOTOR_ON%</button>
+                <button class="left-separator" type="button" onclick="sendMotorOffRequest('/motorOff')">%STR_BTN_MOTOR_OFF%</button>
             </div>
         </div>
         <div id='status'>%STR_STATUS_MSG%</div>

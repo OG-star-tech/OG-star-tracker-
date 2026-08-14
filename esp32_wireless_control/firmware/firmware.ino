@@ -284,6 +284,8 @@ void setup()
     else
         language = static_cast<Languages>(langNum);
 
+    delay(1000);
+
     uint8_t raInvertNum = 0;
     EepromManager::readObject(RA_INVERT_DIR_EEPROM_ADDR, raInvertNum);
     if (raInvertNum > 1)
@@ -292,8 +294,12 @@ void setup()
         ra_axis.setInvertDirectionPin(raInvertNum == 1);
 
     // Initialize the pins
+    bool result = ledcAttach(STATUS_LED, LEDC_FREQ, LEDC_RESOLUTION);
+    if (!result)
+    {
+        print_out("Failed to attach LEDC to STATUS_LED pin");
+    }
     pinMode(INTERV_PIN, OUTPUT);
-    pinMode(STATUS_LED, OUTPUT);
     pinMode(AXIS1_STEP, OUTPUT);
     pinMode(AXIS1_DIR, OUTPUT);
     pinMode(EN12_n, OUTPUT);
@@ -325,6 +331,7 @@ void setup()
 
 void loop()
 {
+    static bool led_blink = false;
     int delay_ticks = 0;
     trackingRates.readTrackingRatePresetsFromEEPROM();
 
@@ -338,13 +345,14 @@ void loop()
         if (ra_axis.slewActive)
         {
             // Blink status LED if mount is in slew mode
-            digitalWrite(STATUS_LED, !digitalRead(STATUS_LED));
+            ledcWrite(STATUS_LED, led_blink ? 0 : STATUS_LED_BRIGHTNESS);
+            led_blink = !led_blink;
             delay_ticks = 150; // Delay for 150 ms
         }
         else
         {
             // Turn on status LED if sidereal tracking is ON
-            digitalWrite(STATUS_LED, ra_axis.trackingActive ? HIGH : LOW);
+            ledcWrite(STATUS_LED, ra_axis.trackingActive ? STATUS_LED_BRIGHTNESS : 0);
             delay_ticks = 1000; // Delay for 1 second
         }
         ra_axis.print_status();
