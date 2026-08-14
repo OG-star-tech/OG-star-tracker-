@@ -254,7 +254,8 @@ void ApiHandler::handleSetMotorSettings()
 void ApiHandler::handleGetMotorSettings()
 {
     char response[50];
-    snprintf(response, sizeof(response), "{\"raInvert\":%d}", ra_axis.getInvertDirectionPin() ? 1 : 0);
+    snprintf(response, sizeof(response), "{\"raInvert\":%d}",
+             ra_axis.getInvertDirectionPin() ? 1 : 0);
     _server->send(200, MIME_APPLICATION_JSON, response);
 }
 

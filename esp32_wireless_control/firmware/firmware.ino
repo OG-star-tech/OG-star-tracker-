@@ -289,7 +289,8 @@ void setup()
     uint8_t raInvertNum = 0;
     EepromManager::readObject(RA_INVERT_DIR_EEPROM_ADDR, raInvertNum);
     if (raInvertNum > 1)
-        ra_axis.setInvertDirectionPin(RA_INVERT_DIR_PIN); // never saved yet, use compile-time default
+        ra_axis.setInvertDirectionPin(
+            RA_INVERT_DIR_PIN); // never saved yet, use compile-time default
     else
         ra_axis.setInvertDirectionPin(raInvertNum == 1);
 
