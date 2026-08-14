@@ -106,6 +106,18 @@ class Axis
 
     void print_status();
 
+    // Runtime override for a reversed motor wiring/direction pin (persisted separately
+    // in EEPROM). Takes effect the next time tracking/slewing/goto is (re)started.
+    void setInvertDirectionPin(bool invert)
+    {
+        invertDirectionPin = invert;
+    }
+
+    bool getInvertDirectionPin() const
+    {
+        return invertDirectionPin;
+    }
+
   private:
     void setDirection(bool directionArg);
     void setMicrostep(uint16_t microstep);

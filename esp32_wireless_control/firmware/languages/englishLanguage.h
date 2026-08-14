@@ -143,7 +143,8 @@ const char* const englishLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "Fine Tune",                // STR_TUNE_RATE
     "Rate Presets",             // STR_RATE_PRESET
     "Save Rate",                // STR_SAVE_RATE_PRESET
-    "Load Rate"                 // STR_LOAD_RATE_PRESET
+    "Load Rate",                // STR_LOAD_RATE_PRESET
+    "Reverse RA motor"          // STR_REVERSE_RA_DIRECTION
 };
 
 #endif

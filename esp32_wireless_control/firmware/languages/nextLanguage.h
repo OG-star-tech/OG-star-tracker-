@@ -144,7 +144,8 @@ const char* const nextLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "", // STR_TUNE_RATE
     "", // STR_RATE_PRESET
     "", // STR_SAVE_RATE_PRESET
-    ""  // STR_LOAD_RATE_PRESET
+    "", // STR_LOAD_RATE_PRESET
+    ""  // STR_REVERSE_RA_DIRECTION
 };
 
 #endif

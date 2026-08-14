@@ -563,6 +563,27 @@
             xhr.send();
         }
 
+        function loadMotorSettings() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    try {
+                        var settings = JSON.parse(this.responseText);
+                        document.getElementById('reverse-ra-checkbox').checked = !!settings.raInvert;
+                    } catch (e) {
+                        console.error('Error parsing motor settings:', e);
+                    }
+                }
+            };
+            xhr.open('GET', '/getMotorSettings', true);
+            xhr.send();
+        }
+
+        function setMotorSettings() {
+            var raInvert = document.getElementById('reverse-ra-checkbox').checked ? 1 : 0;
+            sendRequest('/setMotorSettings?raInvert=' + raInvert);
+        }
+
         function sendStartRequest(url) {
             var direction = document.getElementById('hemisphere-select').value;
             var trackingSpeed = document.getElementById('tracking-rate-value').value;
@@ -866,6 +887,7 @@
             changeMode();
             handleCatalogChange();
             loadTrackingRate(0);
+            loadMotorSettings();
 
             const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
@@ -1449,6 +1471,10 @@
                     <option value='1'>%STR_NORTH%</option>
                     <option value='0'>%STR_SOUTH%</option>
                 </select>
+
+                <h3>%STR_REVERSE_RA_DIRECTION%:</h3>
+                <input aria-label="Reverse RA Direction" type='checkbox' id='reverse-ra-checkbox'
+                    onchange="setMotorSettings()" style="width: 20px; height: 20px; justify-self: start;">
 
                 <h3>%STR_TRACKING_RATE%:</h3>
                 <select aria-label="tspeed" id='tracking-speed-select' onchange="loadTrackingRate(value);">
