@@ -105,6 +105,10 @@
 #define PRESETS_EEPROM_START_LOCATION 1
 // Start after intervalometer presets (10 * 28 bytes)
 #define TRACKING_RATE_PRESETS_EEPROM_START_LOCATION 300
+// Motor direction settings (currently: RA invert-direction flag, 1 byte). Well clear of
+// the tracking rate presets above (300 + 5*12 = 360).
+#define MOTOR_SETTINGS_EEPROM_ADDR 400
+#define RA_INVERT_DIR_EEPROM_ADDR MOTOR_SETTINGS_EEPROM_ADDR
 
 // Stepper driver pins -- intended for TMC2209 for now
 // AXIS 1 - RA

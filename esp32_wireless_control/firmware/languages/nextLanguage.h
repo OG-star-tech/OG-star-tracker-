@@ -70,6 +70,8 @@ const char* const nextLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "", // STR_SIDEREAL
     "", // STR_SOLAR
     "", // STR_LUNAR
+    "", // STR_BTN_MOTOR_ON
+    "", // STR_BTN_MOTOR_OFF
     "", // STR_BTN_ON
     "", // STR_BTN_OFF
     "", // STR_SLEW_CONTROL
@@ -147,7 +149,8 @@ const char* const nextLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "", // STR_TUNE_RATE
     "", // STR_RATE_PRESET
     "", // STR_SAVE_RATE_PRESET
-    ""  // STR_LOAD_RATE_PRESET
+    "", // STR_LOAD_RATE_PRESET
+    ""  // STR_REVERSE_RA_DIRECTION
 };
 
 #endif

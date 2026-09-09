@@ -229,6 +229,22 @@ class ApiHandler
     void handleGetLanguageStrings();
 
     /**
+     * @endpoint GET /setMotorSettings
+     * @brief Set motor direction options (persisted to EEPROM), e.g. to correct reversed
+     * stepper wiring without needing to recompile
+     * @param raInvert - Reverse RA motor direction (0=normal, 1=inverted)
+     * @response 200 OK with message
+     */
+    void handleSetMotorSettings();
+
+    /**
+     * @endpoint GET /getMotorSettings
+     * @brief Get current motor direction options
+     * @response 200 OK with JSON {"raInvert": 0|1}
+     */
+    void handleGetMotorSettings();
+
+    /**
      * @endpoint GET /
      * @brief Serve main web interface
      * @response 200 OK with HTML content

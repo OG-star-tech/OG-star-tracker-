@@ -146,7 +146,8 @@ const char* const chineseLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "微调",           // STR_TUNE_RATE
     "预设速率",       // STR_RATE_PRESET
     "保存速率",       // STR_SAVE_RATE_PRESET
-    "加载速率"        // STR_LOAD_RATE_PRESET
+    "加载速率",       // STR_LOAD_RATE_PRESET
+    "反转赤经方向"    // STR_REVERSE_RA_DIRECTION
 };
 
 #endif

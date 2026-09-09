@@ -148,7 +148,8 @@ const char* const germanLangHTMLStrings[numberOfHTMLStrings] PROGMEM = {
     "Feinabstimmung",                                     // STR_TUNE_RATE
     "Voreinstellungsrate",                                // STR_RATE_PRESET
     "Rate speichern",                                     // STR_SAVE_RATE_PRESET
-    "Rate laden"                                          // STR_LOAD_RATE_PRESET
+    "Rate laden",                                         // STR_LOAD_RATE_PRESET
+    "RA-Richtung umkehren"                                // STR_REVERSE_RA_DIRECTION
 };
 
 #endif

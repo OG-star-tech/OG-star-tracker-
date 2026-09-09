@@ -443,6 +443,42 @@ GET http://192.168.4.1/langstrings
 - Contains all UI string placeholders and their translations
 - Language names array used for building language selector dropdown
 
+### Set Motor Settings
+**Endpoint:** `GET /setMotorSettings`  
+**Description:** Set motor direction options, persisted to EEPROM. Used to correct a reversed
+RA stepper wiring without recompiling the firmware.
+
+**Parameters:**
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `raInvert` | integer | Yes | 0=normal, 1=reverse RA motor direction |
+
+**Response:** `200 OK` - Success message
+
+**Example:**
+```
+GET http://192.168.4.1/setMotorSettings?raInvert=1
+```
+
+**Notes:**
+- Takes effect the next time tracking/slewing/goto is (re)started
+
+### Get Motor Settings
+**Endpoint:** `GET /getMotorSettings`  
+**Description:** Get current motor direction options
+
+**Response:** `200 OK` - JSON object
+```json
+{
+  "raInvert": 0
+}
+```
+
+**Example:**
+```
+GET http://192.168.4.1/getMotorSettings
+```
+
 ### Get Web Interface
 **Endpoint:** `GET /`  
 **Description:** Serve main web interface HTML  

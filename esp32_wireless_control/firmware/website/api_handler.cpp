@@ -111,6 +111,8 @@ void ApiHandler::registerEndpoints()
     _server->on("/setlang", HTTP_GET, [api]() { api->handleSetLanguage(); });
     _server->on("/getlang", HTTP_GET, [api]() { api->handleGetLanguage(); });
     _server->on("/langstrings", HTTP_GET, [api]() { api->handleGetLanguageStrings(); });
+    _server->on("/setMotorSettings", HTTP_GET, [api]() { api->handleSetMotorSettings(); });
+    _server->on("/getMotorSettings", HTTP_GET, [api]() { api->handleGetMotorSettings(); });
 
     // OTA firmware update
     _server->on("/ota", HTTP_GET, []() { OTAHandler::getInstance().handleOTAPage(); });
@@ -237,6 +239,23 @@ void ApiHandler::handleGetLanguage()
 {
     char response[50];
     snprintf(response, sizeof(response), "{\"lang\":%d}", static_cast<int>(language));
+    _server->send(200, MIME_APPLICATION_JSON, response);
+}
+
+void ApiHandler::handleSetMotorSettings()
+{
+    bool raInvert = _server->arg("raInvert").toInt() != 0;
+    uint8_t raInvertNum = raInvert ? 1 : 0;
+    EepromManager::writeObject(RA_INVERT_DIR_EEPROM_ADDR, raInvertNum);
+    ra_axis.setInvertDirectionPin(raInvert);
+    _server->send(200, MIME_TYPE_TEXT, languageMessageStrings[language][MSG_OK]);
+}
+
+void ApiHandler::handleGetMotorSettings()
+{
+    char response[50];
+    snprintf(response, sizeof(response), "{\"raInvert\":%d}",
+             ra_axis.getInvertDirectionPin() ? 1 : 0);
     _server->send(200, MIME_APPLICATION_JSON, response);
 }
 

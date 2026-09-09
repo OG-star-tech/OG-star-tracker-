@@ -285,6 +285,15 @@ void setup()
         language = static_cast<Languages>(langNum);
 
     delay(1000);
+
+    uint8_t raInvertNum = 0;
+    EepromManager::readObject(RA_INVERT_DIR_EEPROM_ADDR, raInvertNum);
+    if (raInvertNum > 1)
+        ra_axis.setInvertDirectionPin(
+            RA_INVERT_DIR_PIN); // never saved yet, use compile-time default
+    else
+        ra_axis.setInvertDirectionPin(raInvertNum == 1);
+
     // Initialize the pins
     bool result = ledcAttach(STATUS_LED, LEDC_FREQ, LEDC_RESOLUTION);
     if (!result)

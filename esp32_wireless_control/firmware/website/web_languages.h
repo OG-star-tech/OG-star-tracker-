@@ -1,7 +1,7 @@
 #ifndef WEB_LANGUAGES_H
 #define WEB_LANGUAGES_H
 
-#define numberOfHTMLStrings 90
+#define numberOfHTMLStrings 91
 
 #include "error.h"
 
